@@ -12,7 +12,7 @@ public class SavingsAccountTest {
 	}
 
 	@Test
-	public void default_checking_account_starting_balance_is_zero() {
+	public void default_savings_account_starting_balance_is_zero() {
 		double actual = account.getBalance();
 
 		assertEquals(account.DEFAULT_STARTING_BALANCE, actual);
