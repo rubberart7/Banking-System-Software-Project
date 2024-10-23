@@ -3,7 +3,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AccountTest {
+public class CheckingAccountTest {
 	Account account;
 
 	@BeforeEach
@@ -66,6 +66,16 @@ public class AccountTest {
 		double actual = account.getBalance();
 
 		assertEquals(0, actual);
+	}
+
+	@Test
+	public void when_withdrawing_balance_cannot_go_below_zero() {
+		account.withdraw(50.0);
+
+		double actual = account.getBalance();
+
+		assertEquals(0, actual);
+
 	}
 
 }
