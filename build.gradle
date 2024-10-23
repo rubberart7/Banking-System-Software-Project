@@ -26,19 +26,20 @@ test {
 test {
     finalizedBy jacocoTestReport // report is always generated after tests run
 }
-
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
-
-    reports {
-        xml.required = true
-        xml.outputLocation = layout.buildDirectory.file('builds/jacoco/jacoco.xml')
-        html.required = true
-        html.outputLocation = layout.buildDirectory.dir('builds/jacocoHtml')
-        csv.required = false
-    }
 }
 
 jacoco {
     toolVersion = "0.8.11"
+    reportsDirectory = layout.buildDirectory.dir("builds/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.outputLocation = layout.buildDirectory.file('builds/jacoco/jacoco.xml')
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
 }
