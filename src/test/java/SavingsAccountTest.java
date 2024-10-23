@@ -3,12 +3,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class CheckingAccountTest {
-	CheckingAccount account;
+public class SavingsAccountTest {
+	SavingsAccount account;
 
 	@BeforeEach
 	public void setUp() {
-		account = new CheckingAccount("12345678", 9.0);
+		account = new SavingsAccount("87654321", 4.0);
 	}
 
 	@Test
@@ -17,5 +17,4 @@ public class CheckingAccountTest {
 
 		assertEquals(account.DEFAULT_STARTING_BALANCE, actual);
 	}
-
 }
