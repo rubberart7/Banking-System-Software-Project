@@ -1,5 +1,5 @@
 include:
-  - template: Code-Quality.gitlab-ci.yml
+  - template: Code-Quality..gitlab-ci.yml
 
 image: gradle:7.3.3-jdk17-alpine
 
