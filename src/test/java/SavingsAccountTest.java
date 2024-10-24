@@ -10,7 +10,6 @@ public class SavingsAccountTest {
 	public void setUp() {
 		account = new SavingsAccount("87654321", 4.0);
 	}
-
 	@Test
 	public void default_savings_account_starting_balance_is_zero() {
 		double actual = account.getBalance();
