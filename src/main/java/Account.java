@@ -34,4 +34,6 @@ public abstract class Account {
 		return balance;
 	}
 
+	protected abstract String getAccountType();
+
 }

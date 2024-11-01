@@ -28,4 +28,11 @@ public class Bank {
 	public int getSize() {
 		return accounts.size();
 	}
+
+	public boolean accountExistsById(String quickId) {
+		if (accounts.get(quickId) != null) {
+			return true;
+		}
+		return false;
+	}
 }

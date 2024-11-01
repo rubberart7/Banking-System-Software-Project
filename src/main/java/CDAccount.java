@@ -5,4 +5,9 @@ public class CDAccount extends Account {
 		this.balance = startingBalance;
 	}
 
+	@Override
+	protected String getAccountType() {
+		return "cd".toLowerCase();
+	}
+
 }

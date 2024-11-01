@@ -3,4 +3,9 @@ public class CheckingAccount extends Account {
 		super(idValue, aprValue);
 	}
 
+	@Override
+	protected String getAccountType() {
+		return "checking".toLowerCase();
+	}
+
 }

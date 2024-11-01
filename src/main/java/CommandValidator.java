@@ -1,46 +1,38 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommandValidator {
-	private static final ArrayList<String> VALID_ACCOUNT_TYPES = new ArrayList<>(
-			Arrays.asList("checking", "savings", "cd"));
 	private Bank bank;
+	private Map<String, Object> validators;
 
 	public CommandValidator(Bank bank) {
 		this.bank = bank;
+		this.validators = new HashMap<>();
+
+		this.validators.put("create", new CreateCommandValidator(bank));
+		this.validators.put("deposit", new DepositCommandValidator(bank));
+
 	}
 
 	protected boolean validate(String command) {
 		ArrayList<String> commandParts = new ArrayList<>(Arrays.asList(command.split(" ")));
+		if (commandParts.size() < 3) {
+			return false;
+		}
 		String commandType = commandParts.get(0).toLowerCase();
 		if (commandType.equals("create")) {
-			return validateCreateCommand(commandParts);
+			CreateCommandValidator createValidator = (CreateCommandValidator) validators.get("create");
+			return createValidator.validate(commandParts);
+		}
+
+		else if (commandType.equals("deposit")) {
+			DepositCommandValidator depositValidator = (DepositCommandValidator) validators.get("deposit");
+			return depositValidator.validate(commandParts);
 		}
 
 		return false;
-	}
-
-	private boolean validateCreateCommand(ArrayList<String> commandParts) {
-		String accType = commandParts.get(1).toLowerCase();
-		String idValue = commandParts.get(2);
-
-		if (idValue.length() != 8 || !idValue.matches("\\d{8}")) {
-			return false;
-		}
-		if (!VALID_ACCOUNT_TYPES.contains(accType)) {
-			return false;
-		}
-
-		if ((accType.equals("checking") || accType.equals("savings")) && (commandParts.size() != 4)) {
-			return false;
-		}
-
-		if (accType.equals("cd") && commandParts.size() != 5) {
-			return false;
-		}
-
-		return true;
-
 	}
 
 }
