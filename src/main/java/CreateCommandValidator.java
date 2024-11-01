@@ -1,26 +1,18 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CommandValidator {
+public class CreateCommandValidator {
 	private static final ArrayList<String> VALID_ACCOUNT_TYPES = new ArrayList<>(
 			Arrays.asList("checking", "savings", "cd"));
 	private Bank bank;
 
-	public CommandValidator(Bank bank) {
+	public CreateCommandValidator(Bank bank) {
 		this.bank = bank;
 	}
 
-	protected boolean validate(String command) {
+	public boolean validate(String command) {
 		ArrayList<String> commandParts = new ArrayList<>(Arrays.asList(command.split(" ")));
-		String commandType = commandParts.get(0).toLowerCase();
-		if (commandType.equals("create")) {
-			return validateCreateCommand(commandParts);
-		}
 
-		return false;
-	}
-
-	private boolean validateCreateCommand(ArrayList<String> commandParts) {
 		String accType = commandParts.get(1).toLowerCase();
 		String idValue = commandParts.get(2);
 
@@ -40,7 +32,5 @@ public class CommandValidator {
 		}
 
 		return true;
-
 	}
-
 }
