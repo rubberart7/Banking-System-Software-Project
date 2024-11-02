@@ -72,4 +72,90 @@ public class DepositCommandValidatorTest {
 		assertFalse(actual);
 
 	}
+
+	// test typos/missing values/case insensitive/invalid values
+	@Test
+	void deposit_command_has_typo() {
+		boolean actual = commandValidator.validate("depsit 12345678 100");
+		assertFalse(actual);
+	}
+
+	@Test
+	void deposit_command_is_missing() {
+		boolean actual = commandValidator.validate("12345678 100");
+		assertFalse(actual);
+
+	}
+
+	@Test
+	void deposit_command_is_case_insensitive() {
+		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		boolean actual = commandValidator.validate("DEPOSIT 12345678 100");
+		assertTrue(actual);
+	}
+
+	@Test
+	void deposit_command_has_non_string_values() {
+		boolean actual = commandValidator.validate("deposit234 12345678 100");
+		assertFalse(actual);
+	}
+
+	@Test
+	void deposit_savings_has_too_many_arguments() {
+		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		boolean actual = commandValidator.validate("deposit 1235678 1000 500");
+		assertFalse(actual);
+
+	}
+
+	@Test
+	void deposit_savings_is_missing_deposit_amount() {
+		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		boolean actual = commandValidator.validate("deposit 1235678");
+		assertFalse(actual);
+
+	}
+
+	@Test
+	void deposit_checking_has_too_many_arguments() {
+		bank.addRegularAccount("12345678", 2.1, "checkings");
+		boolean actual = commandValidator.validate("deposit 1235678 1000 500");
+		assertFalse(actual);
+
+	}
+
+	@Test
+	void deposit_checking_is_missing_deposit_amount() {
+		bank.addRegularAccount("12345678", 2.1, "checking");
+		boolean actual = commandValidator.validate("deposit 1235678");
+		assertFalse(actual);
+
+	}
+
+//	checking ID validation
+	@Test
+	void deposit_command_has_non_eight_digit_ID() {
+		boolean actual = commandValidator.validate("deposit 1235678 100");
+		assertFalse(actual);
+	}
+
+	@Test
+	void deposit_command_has_non_numeric_eight_digit_ID() {
+		boolean actual = commandValidator.validate("deposit 123G6S78 100");
+		assertFalse(actual);
+	}
+
+	@Test
+	void deposit_savings_command_has_all_valid_values_and_spelling() {
+		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		boolean actual = commandValidator.validate("deposit 12345678 100");
+		assertTrue(actual);
+	}
+
+	@Test
+	void deposit_checking_command_has_all_valid_values_and_spelling() {
+		bank.addRegularAccount("12345678", 2.1, "checkingaccount");
+		boolean actual = commandValidator.validate("deposit 12345678 100");
+		assertTrue(actual);
+	}
 }

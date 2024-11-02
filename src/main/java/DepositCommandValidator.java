@@ -11,7 +11,6 @@ public class DepositCommandValidator {
 		String idValue = commandParts.get(1);
 		String amount = commandParts.get(2);
 		double depositedAmount = Double.parseDouble(amount);
-		String accountType = bank.getAccounts().get(idValue).getAccountType();
 
 		if (depositedAmount < 0) {
 			return false;
@@ -20,6 +19,8 @@ public class DepositCommandValidator {
 		if (idValue.length() != 8 || !idValue.matches("\\d{8}")) {
 			return false;
 		}
+
+		String accountType = bank.getAccounts().get(idValue).getAccountType();
 
 		if (accountType.equals("savings") || accountType.equals("checking")) {
 			if (commandParts.size() != 3) {
