@@ -132,6 +132,18 @@ public class DepositCommandValidatorTest {
 
 	}
 
+	@Test
+	void deposit_amount_contains_non_numeric_values() {
+		boolean actual = commandValidator.validate("deposit 1235678 100a");
+		assertFalse(actual);
+	}
+
+	@Test
+	void deposit_command_arguments_are_out_of_order_is_invalid() {
+		boolean actual = commandValidator.validate("100 deposit 1235678");
+		assertFalse(actual);
+	}
+
 //	checking ID validation
 	@Test
 	void deposit_command_has_non_eight_digit_ID() {
@@ -152,10 +164,4 @@ public class DepositCommandValidatorTest {
 		assertTrue(actual);
 	}
 
-	@Test
-	void deposit_checking_command_has_all_valid_values_and_spelling() {
-		bank.addRegularAccount("12345678", 2.1, "checkingaccount");
-		boolean actual = commandValidator.validate("deposit 12345678 100");
-		assertTrue(actual);
-	}
 }

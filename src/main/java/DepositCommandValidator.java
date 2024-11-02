@@ -10,8 +10,13 @@ public class DepositCommandValidator {
 	public boolean validate(ArrayList<String> commandParts) {
 		String idValue = commandParts.get(1);
 		String amount = commandParts.get(2);
-		double depositedAmount = Double.parseDouble(amount);
 
+		double depositedAmount;
+		try {
+			depositedAmount = Double.parseDouble(amount);
+		} catch (NumberFormatException e) {
+			return false;
+		}
 		if (depositedAmount < 0) {
 			return false;
 		}

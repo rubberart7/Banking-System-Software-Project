@@ -23,6 +23,13 @@ public class CreateCommandValidatorTest {
 	}
 
 	@Test
+	void create_command_arguments_out_of_order() {
+		boolean actual = commandValidator.validate("12345678 checking 3.2");
+		assertFalse(actual);
+
+	}
+
+	@Test
 	void create_checking_acc_with_typo_create_command() {
 		boolean actual = commandValidator.validate("crate checking 12345678 3.2");
 		assertFalse(actual);
@@ -52,7 +59,7 @@ public class CreateCommandValidatorTest {
 		assertFalse(actual);
 	}
 
-// create account with valid acc type
+// create account with valid acc type or not
 	@Test
 	void create_valid_acc_of_type_checking() {
 		boolean actual = commandValidator.validate("create checking 12345678 3.2");
@@ -71,7 +78,7 @@ public class CreateCommandValidatorTest {
 		assertFalse(actual);
 	}
 
-//	create accs with correct amount of arguments
+//	create accs with correct amount of arguments or not
 	@Test
 	void create_checking_does_have_the_correct_amount_of_arguments() {
 		boolean actual = commandValidator.validate("create checking 12345678 4.1");
@@ -126,7 +133,7 @@ public class CreateCommandValidatorTest {
 		assertFalse(actual);
 	}
 
-//	create command with valid ID values
+//	create command with valid or invalid ID values
 	@Test
 	void create_checking_acc_has_valid_eight_digit_ID_value() {
 		boolean actual = commandValidator.validate("create checking 12345678 3.2");
