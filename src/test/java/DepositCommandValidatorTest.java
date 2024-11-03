@@ -75,6 +75,13 @@ public class DepositCommandValidatorTest {
 
 	// test typos/missing values/case insensitive/invalid values
 	@Test
+	void deposit_amount_is_missing() {
+		boolean actual = commandValidator.validate("deposit 12345678");
+		assertFalse(actual);
+
+	}
+
+	@Test
 	void deposit_command_has_typo() {
 		boolean actual = commandValidator.validate("depsit 12345678 100");
 		assertFalse(actual);
@@ -118,7 +125,7 @@ public class DepositCommandValidatorTest {
 
 	@Test
 	void deposit_checking_has_too_many_arguments() {
-		bank.addRegularAccount("12345678", 2.1, "checkings");
+		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("deposit 1235678 1000 500");
 		assertFalse(actual);
 
@@ -145,6 +152,13 @@ public class DepositCommandValidatorTest {
 	}
 
 //	checking ID validation
+	@Test
+	void deposit_id_is_missing() {
+		boolean actual = commandValidator.validate("deposit 100");
+		assertFalse(actual);
+
+	}
+
 	@Test
 	void deposit_command_has_non_eight_digit_ID() {
 		boolean actual = commandValidator.validate("deposit 1235678 100");
