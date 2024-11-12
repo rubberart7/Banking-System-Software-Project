@@ -10,19 +10,19 @@ public abstract class Account {
 		this.idValue = idValue;
 	}
 
-	public double getAprValue() {
+	protected double getAprValue() {
 		return aprValue;
 	}
 
-	public String getIdValue() {
+	protected String getIdValue() {
 		return idValue;
 	}
 
-	public void deposit(double amount) {
+	protected void deposit(double amount) {
 		balance += amount;
 	}
 
-	public void withdraw(double amount) {
+	protected void withdraw(double amount) {
 		if (amount > 0 && balance >= amount) {
 			balance -= amount;
 		} else {
@@ -30,7 +30,7 @@ public abstract class Account {
 		}
 	}
 
-	public double getBalance() {
+	protected double getBalance() {
 		return balance;
 	}
 

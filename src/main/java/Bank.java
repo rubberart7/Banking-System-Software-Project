@@ -8,11 +8,11 @@ public class Bank {
 		accounts = new HashMap<>();
 	}
 
-	public Map<String, Account> getAccounts() {
+	protected Map<String, Account> getAccounts() {
 		return accounts;
 	}
 
-	public void addRegularAccount(String quickId, double quickApr, String accountType) {
+	protected void addRegularAccount(String quickId, double quickApr, String accountType) {
 		if (accountType.equalsIgnoreCase("CheckingAccount")) {
 			accounts.put(quickId, new CheckingAccount(quickId, quickApr));
 		} else if (accountType.equalsIgnoreCase("SavingsAccount")) {
@@ -21,15 +21,15 @@ public class Bank {
 		}
 	}
 
-	public void addCDAccount(String quickId, double quickApr, double quickInitialBalance) {
+	protected void addCDAccount(String quickId, double quickApr, double quickInitialBalance) {
 		accounts.put(quickId, new CDAccount(quickId, quickApr, quickInitialBalance));
 	}
 
-	public int getSize() {
+	protected int getSize() {
 		return accounts.size();
 	}
 
-	public boolean accountExistsById(String quickId) {
+	protected boolean accountExistsById(String quickId) {
 		if (accounts.get(quickId) != null) {
 			return true;
 		}
