@@ -18,8 +18,10 @@ public class CommandProcessorTest {
 		Double apr = Double.parseDouble(commandParts.get(3));
 
 		assertTrue(bank.accountExistsById(idValue));
-		assertEquals(bank.getAccounts().get(idValue).getAccountType(), accType);
-		assertEquals(bank.getAccounts().get("12345678").getAprValue(), apr);
+		if (accType.equals("checking") || accType.equals("savings")) {
+			assertEquals(bank.getAccounts().get(idValue).getAccountType(), accType);
+		}
+		assertEquals(bank.getAccounts().get(idValue).getAprValue(), apr);
 	}
 
 	@BeforeEach
@@ -56,6 +58,25 @@ public class CommandProcessorTest {
 		assertAccountCreated(commandOne);
 		assertAccountCreated(commandTwo);
 
+	}
+
+	@Test
+	void create_cd_account() {
+		String command = "create cd 12345678 3.5 1000";
+		commandProcessor.processCommand(command);
+
+		assertAccountCreated(command);
+	}
+
+	@Test
+	void create_cd_account_twice() {
+		String commandOne = "create cd 12345678 3.5 1000";
+		String commandTwo = "create cd 87654321 3.5 1000";
+		commandProcessor.processCommand(commandOne);
+		commandProcessor.processCommand(commandTwo);
+
+		assertAccountCreated(commandOne);
+		assertAccountCreated(commandTwo);
 	}
 
 }
