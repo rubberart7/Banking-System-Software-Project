@@ -10,7 +10,7 @@ public class CreateCommandValidator {
 		this.bank = bank;
 	}
 
-	public boolean validate(ArrayList<String> commandParts) {
+	protected boolean validate(ArrayList<String> commandParts) {
 		if (commandParts.size() < 4) {
 			return false;
 		}

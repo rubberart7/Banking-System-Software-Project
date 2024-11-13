@@ -34,14 +34,14 @@ public class CommandStorageTest {
 	}
 
 	@Test
-	void size_of_invalid_commands_is_one() {
+	void size_of_invalid_commands_is_one_when_adding_one_invalid_command() {
 		commandStorage.addInvalidCommand(INVALID_DEPOSIT_COMMAND);
 		assertEquals(1, commandStorage.getInvalidCommands().size());
 
 	}
 
 	@Test
-	void size_of_invalid_commands_is_two() {
+	void size_of_invalid_commands_is_two_when_adding_two_invalid_commands() {
 		commandStorage.addInvalidCommand(INVALID_DEPOSIT_COMMAND);
 		commandStorage.addInvalidCommand(INVALID_CREATE_COMMAND);
 

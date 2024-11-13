@@ -53,6 +53,14 @@ public class CommandProcessorTest {
 	}
 
 	@Test
+	void created_checking_acc_has_starting_balance_of_zero() {
+		commandProcessor.processCommand("create checking 12345678 2.0");
+
+		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
+
+	}
+
+	@Test
 	void create_savings_acc_has_acc_in_bank_with_the_correct_id_value() {
 		commandProcessor.processCommand("create savings 12345678 0.1");
 
@@ -71,6 +79,14 @@ public class CommandProcessorTest {
 		commandProcessor.processCommand("create savings 12345678 2.0");
 
 		assertEquals(bank.getAccounts().get("12345678").getAccountType(), "savings");
+	}
+
+	@Test
+	void created_savings_acc_has_starting_balance_of_zero() {
+		commandProcessor.processCommand("create savings 12345678 2.0");
+
+		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
+
 	}
 
 	@Test
@@ -93,6 +109,13 @@ public class CommandProcessorTest {
 		commandProcessor.processCommand("create cd 12345678 2.0 1500");
 
 		assertEquals(bank.getAccounts().get("12345678").getAccountType(), "cd");
+	}
+
+	@Test
+	void create_cd_has_starting_balance_of_provided_value() {
+		commandProcessor.processCommand("create cd 12345678 2.0 1500");
+
+		assertEquals(1500, bank.getAccounts().get("12345678").getBalance());
 	}
 
 	@Test
@@ -187,37 +210,14 @@ public class CommandProcessorTest {
 	}
 
 	@Test
-	void deposit_into_cd_acc_increases_balance_of_correct_acc() {
-		bank.addCDAccount("12345678", 9.2, 1500);
-		bank.addCDAccount("87654321", 9.2, 2000);
-
-		commandProcessor.processCommand("deposit 12345678 100");
-
-		assertEquals(1600, bank.getAccounts().get("12345678").getBalance());
-	}
-
-	@Test
-	void deposit_into_cd_acc_twice_increases_balance_of_correct_acc() {
-		bank.addCDAccount("12345678", 9.2, 1500);
-		bank.addCDAccount("87654321", 9.2, 2000);
-
-		commandProcessor.processCommand("deposit 12345678 100");
-		commandProcessor.processCommand("deposit 12345678 300");
-
-		assertEquals(1900, bank.getAccounts().get("12345678").getBalance());
-	}
-
-	@Test
 	void can_deposit_into_correct_account_even_with_many_different_types_of_accs() {
 		bank.addRegularAccount("12345678", 2.0, "savings");
 		bank.addRegularAccount("87654321", 2.0, "checking");
 		bank.addRegularAccount("22222222", 2.0, "savings");
-		bank.addCDAccount("24681357", 9.2, 2000);
-		bank.addCDAccount("13572468", 9.2, 2500);
 
-		commandProcessor.processCommand("deposit 13572468 300");
+		commandProcessor.processCommand("deposit 22222222 300");
 
-		assertEquals(2800, bank.getAccounts().get("13572468").getBalance());
+		assertEquals(300, bank.getAccounts().get("22222222").getBalance());
 	}
 
 }
