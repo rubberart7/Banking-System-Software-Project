@@ -133,21 +133,91 @@ public class CommandProcessorTest {
 		assertAccountCreated("create savings 24681357 2.1");
 	}
 
+	@Test
+	void bank_has_the_correct_number_of_accounts() {
+		commandProcessor.processCommand("create checking 12345678 2.1");
+		commandProcessor.processCommand("create cd 87654321 2.1 1200");
+		commandProcessor.processCommand("create savings 24681357 2.1");
+
+		assertEquals(3, bank.getAccounts().size());
+
+	}
+
 //	deposit command tests
 	@Test
 	void deposit_into_checking_acc_increases_balance_of_correct_acc() {
 		bank.addRegularAccount("12345678", 2.0, "checking");
+		bank.addRegularAccount("87654321", 2.0, "checking");
+
 		commandProcessor.processCommand("deposit 12345678 100");
 
 		assertEquals(100, bank.getAccounts().get("12345678").getBalance());
 	}
 
 	@Test
+	void deposit_into_checking_acc_twice_increases_balance_of_correct_acc() {
+		bank.addRegularAccount("12345678", 2.0, "checking");
+		bank.addRegularAccount("87654321", 2.0, "checking");
+
+		commandProcessor.processCommand("deposit 12345678 100");
+		commandProcessor.processCommand("deposit 12345678 200");
+
+		assertEquals(300, bank.getAccounts().get("12345678").getBalance());
+	}
+
+	@Test
 	void deposit_into_savings_acc_increases_balance_of_correct_acc() {
 		bank.addRegularAccount("12345678", 2.0, "savings");
+		bank.addRegularAccount("87654321", 2.0, "savings");
+
 		commandProcessor.processCommand("deposit 12345678 100");
 
 		assertEquals(100, bank.getAccounts().get("12345678").getBalance());
+	}
+
+	@Test
+	void deposit_into_savings_acc_twice_increases_balance_of_correct_acc() {
+		bank.addRegularAccount("12345678", 2.0, "savings");
+		bank.addRegularAccount("87654321", 2.0, "savings");
+
+		commandProcessor.processCommand("deposit 12345678 100");
+		commandProcessor.processCommand("deposit 12345678 200");
+
+		assertEquals(300, bank.getAccounts().get("12345678").getBalance());
+	}
+
+	@Test
+	void deposit_into_cd_acc_increases_balance_of_correct_acc() {
+		bank.addCDAccount("12345678", 9.2, 1500);
+		bank.addCDAccount("87654321", 9.2, 2000);
+
+		commandProcessor.processCommand("deposit 12345678 100");
+
+		assertEquals(1600, bank.getAccounts().get("12345678").getBalance());
+	}
+
+	@Test
+	void deposit_into_cd_acc_twice_increases_balance_of_correct_acc() {
+		bank.addCDAccount("12345678", 9.2, 1500);
+		bank.addCDAccount("87654321", 9.2, 2000);
+
+		commandProcessor.processCommand("deposit 12345678 100");
+		commandProcessor.processCommand("deposit 12345678 300");
+
+		assertEquals(1900, bank.getAccounts().get("12345678").getBalance());
+	}
+
+	@Test
+	void can_deposit_into_correct_account_even_with_many_different_types_of_accs() {
+		bank.addRegularAccount("12345678", 2.0, "savings");
+		bank.addRegularAccount("87654321", 2.0, "checking");
+		bank.addRegularAccount("22222222", 2.0, "savings");
+		bank.addCDAccount("24681357", 9.2, 2000);
+		bank.addCDAccount("13572468", 9.2, 2500);
+
+		commandProcessor.processCommand("deposit 13572468 300");
+
+		assertEquals(2800, bank.getAccounts().get("13572468").getBalance());
 	}
 
 }
