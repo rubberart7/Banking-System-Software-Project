@@ -13,9 +13,9 @@ public class Bank {
 	}
 
 	protected void addRegularAccount(String quickId, double quickApr, String accountType) {
-		if (accountType.equalsIgnoreCase("CheckingAccount")) {
+		if (accountType.equalsIgnoreCase("checking")) {
 			accounts.put(quickId, new CheckingAccount(quickId, quickApr));
-		} else if (accountType.equalsIgnoreCase("SavingsAccount")) {
+		} else if (accountType.equalsIgnoreCase("savings")) {
 			accounts.put(quickId, new SavingsAccount(quickId, quickApr));
 
 		}

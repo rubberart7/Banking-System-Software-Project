@@ -27,10 +27,8 @@ public class CreateCommandValidator {
 			return false;
 		}
 
-		if (accType.equals("checking") || accType.equals("savings")) {
-			if (commandParts.size() != 4) {
-				return false;
-			}
+		if ((accType.equals("checking") || accType.equals("savings")) && (commandParts.size() != 4)) {
+			return false;
 		}
 
 		if (accType.equals("cd")) {

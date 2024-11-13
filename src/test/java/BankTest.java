@@ -18,9 +18,9 @@ public class BankTest {
 	}
 
 	public void addCommonAccounts() {
-		bank.addRegularAccount(QUICK_ID, QUICK_APR, "CheckingAccount");
+		bank.addRegularAccount(QUICK_ID, QUICK_APR, "checking");
 		bank.addCDAccount(SECOND_ID, QUICK_APR, QUICK_INITIAL_BALANCE);
-		bank.addRegularAccount(THIRD_ID, QUICK_APR, "SavingsAccount");
+		bank.addRegularAccount(THIRD_ID, QUICK_APR, "savings");
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class BankTest {
 
 	@Test
 	public void add_two_accounts_to_bank() {
-		bank.addRegularAccount(QUICK_ID, QUICK_APR, "CheckingAccount");
+		bank.addRegularAccount(QUICK_ID, QUICK_APR, "checking");
 		bank.addCDAccount(SECOND_ID, QUICK_APR, QUICK_INITIAL_BALANCE);
 
 		int actual = bank.getSize();
