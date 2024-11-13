@@ -29,11 +29,32 @@ public class CommandProcessorTest {
 	}
 
 	@Test
-	void create_checking_acc_is_valid() {
+	void create_checking_acc() {
 		String command = "create checking 12345678 0.1";
 		commandProcessor.processCommand(command);
 
 		assertAccountCreated(command);
+
+	}
+
+	@Test
+	void create_saving_acc() {
+		String command = "create savings 12345678 0.1";
+		commandProcessor.processCommand(command);
+
+		assertAccountCreated(command);
+
+	}
+
+	@Test
+	void create_an_account_twice() {
+		String commandOne = "create savings 12345678 0.1";
+		String commandTwo = "create checking 87654321 0.1";
+		commandProcessor.processCommand(commandOne);
+		commandProcessor.processCommand(commandTwo);
+
+		assertAccountCreated(commandOne);
+		assertAccountCreated(commandTwo);
 
 	}
 

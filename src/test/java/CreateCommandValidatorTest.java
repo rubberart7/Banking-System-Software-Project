@@ -371,7 +371,7 @@ public class CreateCommandValidatorTest {
 //	test the unique ID values
 	@Test
 	void create_account_with_duplicate_id_values_is_invalid() {
-		bank.addRegularAccount("12345678", 2.0, "CheckingAccount");
+		bank.addRegularAccount("12345678", 2.0, "checking");
 		boolean actual = commandValidator.validate("create checking 12345678 2.2");
 
 		assertFalse(actual);

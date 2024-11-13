@@ -18,49 +18,49 @@ public class DepositCommandValidatorTest {
 //    cant deposit values outside ranges
 	@Test
 	void deposit_negative_amount_is_invalid() {
-		bank.addRegularAccount("12345678", 2.1, "CheckingAccount");
+		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("deposit 12345678 -1");
 		assertFalse(actual);
 	}
 
 	@Test
 	void deposit_more_than_1000_in_checking_acc_is_invalid() {
-		bank.addRegularAccount("12345678", 2.1, "CheckingAccount");
+		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("deposit 12345678 1001");
 		assertFalse(actual);
 	}
 
 	@Test
 	void deposit_between_0_and_1000_in_checking_acc_is_valid() {
-		bank.addRegularAccount("12345678", 2.1, "CheckingAccount");
+		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("deposit 12345678 1");
 		assertTrue(actual);
 	}
 
 	@Test
 	void deposit_0_in_checking_acc_is_valid() {
-		bank.addRegularAccount("12345678", 2.1, "CheckingAccount");
+		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("deposit 12345678 0");
 		assertTrue(actual);
 	}
 
 	@Test
 	void deposit_more_than_2500_in_savings_is_invalid() {
-		bank.addRegularAccount("12345678", 2.1, "SavingsAccount");
+		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("deposit 12345678 2501");
 		assertFalse(actual);
 	}
 
 	@Test
 	void deposit_between_0_and_2500_in_savings_acc_is_valid() {
-		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("deposit 12345678 1");
 		assertTrue(actual);
 	}
 
 	@Test
 	void deposit_0_in_savings_is_valid() {
-		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("deposit 12345678 0");
 		assertTrue(actual);
 	}
@@ -96,7 +96,7 @@ public class DepositCommandValidatorTest {
 
 	@Test
 	void deposit_command_is_case_insensitive() {
-		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("DEPOSIT 12345678 100");
 		assertTrue(actual);
 	}
@@ -109,7 +109,7 @@ public class DepositCommandValidatorTest {
 
 	@Test
 	void deposit_savings_has_too_many_arguments() {
-		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("deposit 1235678 1000 500");
 		assertFalse(actual);
 
@@ -173,7 +173,7 @@ public class DepositCommandValidatorTest {
 
 	@Test
 	void deposit_savings_command_has_all_valid_values_and_spelling() {
-		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("deposit 12345678 100");
 		assertTrue(actual);
 	}
