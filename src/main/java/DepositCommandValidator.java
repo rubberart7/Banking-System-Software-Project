@@ -17,7 +17,7 @@ public class DepositCommandValidator {
 		} catch (NumberFormatException e) {
 			return false;
 		}
-		if (depositedAmount < 0) {
+		if (Double.parseDouble(amount) < 0) {
 			return false;
 		}
 
