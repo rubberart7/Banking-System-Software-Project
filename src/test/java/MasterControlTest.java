@@ -62,7 +62,7 @@ public class MasterControlTest {
 	}
 
 	@Test
-	void create_part_in_command_is_missing_is_invalid() {
+	void create_part_in_command_missing_is_invalid() {
 		input.add("checking 12345678 1.0");
 		List<String> actual = masterControl.start(input);
 		assertSingleCommand("checking 12345678 1.0", actual);
@@ -77,10 +77,24 @@ public class MasterControlTest {
 	}
 
 	@Test
-	void create_command_is_missing_id_value_is_invalid() {
+	void create_checking_acc_command_is_missing_id_value_is_invalid() {
 		input.add("create checking 1.0");
 		List<String> actual = masterControl.start(input);
 		assertSingleCommand("create checking 1.0", actual);
+	}
+
+	@Test
+	void create_savings_acc_command_is_missing_id_value_is_invalid() {
+		input.add("create savings 1.0");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create savings 1.0", actual);
+	}
+
+	@Test
+	void create_cd_acc_command_is_missing_id_value_is_invalid() {
+		input.add("create cd 1.0 1000");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create cd 1.0 1000", actual);
 	}
 
 	@Test
@@ -88,6 +102,62 @@ public class MasterControlTest {
 		input.add("create checking 12345678");
 		List<String> actual = masterControl.start(input);
 		assertSingleCommand("create checking 12345678", actual);
+	}
+
+	@Test
+	void create_checking_acc_command_with_apr_above_range_is_invalid() {
+		input.add("create checking 12345678 10.1");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create checking 12345678 10.1", actual);
+	}
+
+	@Test
+	void create_checking_acc_command_with_apr_being_negative_is_invalid() {
+		input.add("create checking 12345678 -1");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create checking 12345678 -1", actual);
+	}
+
+	@Test
+	void create_savings_acc_command_with_missing_apr_value_is_invalid() {
+		input.add("create savings 12345678");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create savings 12345678", actual);
+	}
+
+	@Test
+	void create_savings_acc_command_with_apr_above_range_is_invalid() {
+		input.add("create savings 12345678 10.1");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create savings 12345678 10.1", actual);
+	}
+
+	@Test
+	void create_savings_acc_command_with_apr_being_negative_is_invalid() {
+		input.add("create savings 12345678 -1");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create savings 12345678 -1", actual);
+	}
+
+	@Test
+	void create_cd_acc_command_with_missing_apr_value_is_invalid() {
+		input.add("create cd 12345678 1000");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create cd 12345678 1000", actual);
+	}
+
+	@Test
+	void create_cd_acc_command_with_apr_above_range_is_invalid() {
+		input.add("create cd 12345678 10.1 1000");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create cd 12345678 10.1 1000", actual);
+	}
+
+	@Test
+	void create_cd_acc_command_with_apr_being_negative_is_invalid() {
+		input.add("create cd 12345678 -1 1000");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create cd 12345678 -1 1000", actual);
 	}
 
 	@Test
@@ -151,6 +221,14 @@ public class MasterControlTest {
 	}
 
 	@Test
+	void create_command_for_checking_has_too_few_arguments_is_invalid() {
+		input.add("create checking 12345678");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create checking 12345678", actual);
+
+	}
+
+	@Test
 	void create_command_for_checking_with_provided_balance_is_invalid() {
 		input.add("create checking 12345678 1.0 200");
 		List<String> actual = masterControl.start(input);
@@ -163,6 +241,14 @@ public class MasterControlTest {
 		input.add("create savings 12345678 1.0 100");
 		List<String> actual = masterControl.start(input);
 		assertSingleCommand("create savings 12345678 1.0 100", actual);
+
+	}
+
+	@Test
+	void create_command_for_savings_has_too_few_arguments_is_invalid() {
+		input.add("create savings 12345678");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create savings 12345678", actual);
 
 	}
 
@@ -182,6 +268,23 @@ public class MasterControlTest {
 
 	}
 
+	@Test
+	void create_command_for_cd_has_too_few_arguments_is_invalid() {
+		input.add("create cd 12345678 2.0");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create cd 12345678 2.0", actual);
+
+	}
+
+	@Test
+	void create_command_for_cd_acc_without_provided_balance_is_invalid() {
+		input.add("create cd 12345678 1.0");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("create cd 12345678 1.0", actual);
+
+	}
+
+//deposit
 	@Test
 	void deposit_over_1000_in_checking_acc_is_invalid() {
 		bank.addRegularAccount("12345678", 2.0, "checking");
@@ -221,6 +324,38 @@ public class MasterControlTest {
 		input.add("deposit 12345678 -1");
 		List<String> actual = masterControl.start(input);
 		assertSingleCommand("deposit 12345678 -1", actual);
+
+	}
+
+	@Test
+	void deposit_has_typo_in_id_value_is_invalid() {
+		input.add("deposit 1234S678 100");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("deposit 1234S678 100", actual);
+	}
+
+	@Test
+	void deposit_missing_deposit_amount_is_invalid() {
+		input.add("deposit 12345678");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("deposit 12345678", actual);
+
+	}
+
+	@Test
+	void deposit_into_cd_account_is_invalid() {
+		bank.addCDAccount("12345678", 4.1, 1000);
+		input.add("deposit 12345678 100");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("deposit 12345678 100", actual);
+
+	}
+
+	@Test
+	void deposit_command_has_non_eight_digit_id_value_is_invalid() {
+		input.add("deposit 123456789 100");
+		List<String> actual = masterControl.start(input);
+		assertSingleCommand("deposit 123456789 100", actual);
 
 	}
 

@@ -182,7 +182,7 @@ public class CreateCommandValidatorTest {
 	}
 
 	@Test
-	void create_cd_has_too_many_argument() {
+	void create_cd_has_too_many_arguments() {
 		boolean actual = commandValidator.validate("create cd 12345678 3.5 1000 2000");
 		assertFalse(actual);
 	}
