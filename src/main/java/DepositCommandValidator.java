@@ -10,7 +10,9 @@ public class DepositCommandValidator {
 	public boolean validate(ArrayList<String> commandParts) {
 		String idValue = commandParts.get(1);
 		String amount = commandParts.get(2);
-
+		if (commandParts.size() != 3) {
+			return false;
+		}
 		double depositedAmount;
 		try {
 			depositedAmount = Double.parseDouble(amount);
@@ -28,9 +30,6 @@ public class DepositCommandValidator {
 		String accountType = bank.getAccounts().get(idValue).getAccountType();
 
 		if (accountType.equals("savings") || accountType.equals("checking")) {
-			if (commandParts.size() != 3) {
-				return false;
-			}
 
 			if (accountType.equals("savings") && depositedAmount > 2500) {
 				return false;

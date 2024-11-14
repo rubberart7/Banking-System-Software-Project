@@ -14,18 +14,18 @@ public class CommandStorageTest {
 	}
 
 	@Test
-	void invalid_commands_list_is_empty() {
+	void invalid_commands_list_is_empty_when_no_commands_are_added() {
 		assertEquals(0, commandStorage.getInvalidCommands().size());
 	}
 
 	@Test
-	void add_one_invalid_command() {
+	void add_one_invalid_command_to_invalid_commands_list() {
 		commandStorage.addInvalidCommand(INVALID_CREATE_COMMAND);
 		assertEquals(INVALID_CREATE_COMMAND, commandStorage.getInvalidCommands().get(0));
 	}
 
 	@Test
-	void add_two_invalid_commands() {
+	void add_two_invalid_commands_to_invalid_commands_list() {
 		commandStorage.addInvalidCommand(INVALID_CREATE_COMMAND);
 		commandStorage.addInvalidCommand(INVALID_DEPOSIT_COMMAND);
 		assertEquals(INVALID_CREATE_COMMAND, commandStorage.getInvalidCommands().get(0));

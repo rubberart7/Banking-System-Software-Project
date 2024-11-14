@@ -4,12 +4,12 @@ import java.util.List;
 public class CommandStorage {
 	private final List<String> invalidCommands = new ArrayList<>();
 
-	public void addInvalidCommand(String command) {
+	protected void addInvalidCommand(String command) {
 		invalidCommands.add(command);
 
 	}
 
-	public List<String> getInvalidCommands() {
+	protected List<String> getInvalidCommands() {
 		return invalidCommands;
 	}
 }
