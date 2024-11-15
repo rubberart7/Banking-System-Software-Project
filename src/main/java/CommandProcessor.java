@@ -11,12 +11,15 @@ public class CommandProcessor {
 	protected void processCommand(String command) {
 		ArrayList<String> commandParts = new ArrayList<>(Arrays.asList(command.split(" ")));
 		String commandType = commandParts.get(0);
-		if (commandType.equals("create")) {
+		if (commandType.equalsIgnoreCase("create")) {
 			CreateCommandProcessor createProcessor = new CreateCommandProcessor(bank);
 			createProcessor.process(commandParts);
-		} else if (commandType.equals("deposit")) {
+		} else if (commandType.equalsIgnoreCase("deposit")) {
 			DepositCommandProcessor depositCommandProcessor = new DepositCommandProcessor(bank);
 			depositCommandProcessor.process(commandParts);
+		} else if (commandType.equalsIgnoreCase("withdraw")) {
+			WithdrawCommandProcessor withdrawCommandProcessor = new WithdrawCommandProcessor(bank);
+			withdrawCommandProcessor.process(commandParts);
 		}
 	}
 }
