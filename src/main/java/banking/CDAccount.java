@@ -1,3 +1,5 @@
+package banking;
+
 public class CDAccount extends Account {
 
 	public CDAccount(String idValue, double aprValue, double startingBalance) {
