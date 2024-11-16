@@ -252,6 +252,20 @@ public class CreateCommandValidatorTest {
 	}
 
 	@Test
+	void create_checking_with_apr_value_at_0() {
+		boolean actual = commandValidator.validate("create checking 12345678 0");
+		assertTrue(actual);
+
+	}
+
+	@Test
+	void create_checking_with_apr_value_at_10() {
+		boolean actual = commandValidator.validate("create checking 12345678 10");
+		assertTrue(actual);
+
+	}
+
+	@Test
 	void create_checking_acc_with_apr_value_above_range() {
 		boolean actual = commandValidator.validate("create checking 12345678 10.1");
 		assertFalse(actual);
@@ -270,6 +284,20 @@ public class CreateCommandValidatorTest {
 	}
 
 	@Test
+	void create_savings_with_apr_value_at_0() {
+		boolean actual = commandValidator.validate("create savings 12345678 0");
+		assertTrue(actual);
+
+	}
+
+	@Test
+	void create_savings_with_apr_value_at_10() {
+		boolean actual = commandValidator.validate("create savings 12345678 10");
+		assertTrue(actual);
+
+	}
+
+	@Test
 	void create_savings_acc_with_value_above_range() {
 		boolean actual = commandValidator.validate("create savings 12345678 10.1");
 		assertFalse(actual);
@@ -284,6 +312,18 @@ public class CreateCommandValidatorTest {
 	@Test
 	void create_cd_acc_with_apr_value_within_range() {
 		boolean actual = commandValidator.validate("create cd 12345678 9.9 1000");
+		assertTrue(actual);
+	}
+
+	@Test
+	void create_cd_acc_with_apr_value_of_0() {
+		boolean actual = commandValidator.validate("create cd 12345678 0 1000");
+		assertTrue(actual);
+	}
+
+	@Test
+	void create_cd_acc_with_apr_value_of_10() {
+		boolean actual = commandValidator.validate("create cd 12345678 10 1000");
 		assertTrue(actual);
 	}
 

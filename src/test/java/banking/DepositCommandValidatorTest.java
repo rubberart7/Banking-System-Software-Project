@@ -40,6 +40,13 @@ public class DepositCommandValidatorTest {
 	}
 
 	@Test
+	void deposit_1000_in_checking_is_valid() {
+		bank.addRegularAccount("12345678", 2.1, "checking");
+		boolean actual = commandValidator.validate("deposit 12345678 1000");
+		assertTrue(actual);
+	}
+
+	@Test
 	void deposit_0_in_checking_acc_is_valid() {
 		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("deposit 12345678 0");
@@ -57,6 +64,13 @@ public class DepositCommandValidatorTest {
 	void deposit_between_0_and_2500_in_savings_acc_is_valid() {
 		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("deposit 12345678 1");
+		assertTrue(actual);
+	}
+
+	@Test
+	void deposit_2500_in_savings_is_valid() {
+		bank.addRegularAccount("12345678", 2.1, "savings");
+		boolean actual = commandValidator.validate("deposit 12345678 2500");
 		assertTrue(actual);
 	}
 
