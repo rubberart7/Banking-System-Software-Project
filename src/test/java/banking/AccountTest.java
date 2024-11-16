@@ -54,6 +54,16 @@ public class AccountTest {
 	}
 
 	@Test
+	void withdrawing_the_exact_balance_sets_the_balance_to_zero() {
+		account.deposit(100.0);
+		account.withdraw(100);
+
+		double actual = account.getBalance();
+
+		assertEquals(0, actual);
+	}
+
+	@Test
 	public void withdraw_from_same_account_twice_decreases_balance_properly() {
 		account.withdraw(50.0);
 		account.withdraw(50.0);

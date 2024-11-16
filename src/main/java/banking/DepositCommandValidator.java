@@ -31,20 +31,15 @@ public class DepositCommandValidator {
 
 		String accountType = bank.getAccounts().get(idValue).getAccountType();
 
-		if (accountType.equals("savings") || accountType.equals("checking")) {
-
-			if (accountType.equals("savings") && depositedAmount > 2500) {
+		if (accountType.equals("checking")) {
+			if (depositedAmount > 1000) {
 				return false;
 			}
-
-			if (accountType.equals("checking") && depositedAmount > 1000) {
+		} else if (accountType.equals("savings")) {
+			if (depositedAmount > 2500) {
 				return false;
 			}
-
-			return true;
-		}
-
-		if (accountType.equals("cd")) {
+		} else if (accountType.equals("cd")) {
 			return false;
 		}
 
