@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DepositCommandProcessor extends CommandProcessor {
 
-	public DepositCommandProcessor(Bank bank) {
+	protected DepositCommandProcessor(Bank bank) {
 		super(bank);
 	}
 

@@ -23,4 +23,13 @@ public class WithdrawCommandProcessorTest {
 
 		assertEquals(400, bank.getAccounts().get("12345678").getBalance());
 	}
+
+	@Test
+	void withdraw_zero_makes_sure_the_balance_is_the_same() {
+		commandProcessor.processCommand("create checking 12345678 1.2");
+		commandProcessor.processCommand("deposit 12345678 500");
+		commandProcessor.processCommand("withdraw 12345678 0");
+
+		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
+	}
 }

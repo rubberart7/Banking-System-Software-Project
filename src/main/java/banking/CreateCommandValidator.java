@@ -7,11 +7,12 @@ public class CreateCommandValidator extends CommandValidator {
 	private static final ArrayList<String> VALID_ACCOUNT_TYPES = new ArrayList<>(
 			Arrays.asList("checking", "savings", "cd"));
 
-	public CreateCommandValidator(Bank bank) {
+	protected CreateCommandValidator(Bank bank) {
 		super(bank);
 	}
 
 	protected boolean validate(ArrayList<String> commandParts) {
+		boolean isValid = true;
 		if (commandParts.size() < 4) {
 			return false;
 		}

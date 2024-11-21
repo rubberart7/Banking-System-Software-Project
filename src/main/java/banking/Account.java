@@ -6,7 +6,7 @@ public abstract class Account {
 	protected double balance;
 	private double aprValue;
 
-	public Account(String idValue, double aprValue) {
+	protected Account(String idValue, double aprValue) {
 		this.balance = DEFAULT_STARTING_BALANCE;
 		this.aprValue = aprValue;
 		this.idValue = idValue;

@@ -7,7 +7,7 @@ public class MasterControl {
 	private CommandProcessor commandProcessor;
 	private CommandStorage commandStorage;
 
-	public MasterControl(CommandValidator commandValidator, CommandProcessor commandProcessor,
+	protected MasterControl(CommandValidator commandValidator, CommandProcessor commandProcessor,
 			CommandStorage commandStorage) {
 		this.commandValidator = commandValidator;
 		this.commandProcessor = commandProcessor;

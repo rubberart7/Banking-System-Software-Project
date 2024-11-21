@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class DepositCommandValidator extends CommandValidator {
 
-	public DepositCommandValidator(Bank bank) {
+	protected DepositCommandValidator(Bank bank) {
 		super(bank);
 	}
 

@@ -3,9 +3,9 @@ package banking;
 import java.util.ArrayList;
 
 public class WithdrawCommandProcessor {
-	private Bank bank;
+	protected Bank bank;
 
-	public WithdrawCommandProcessor(Bank bank) {
+	protected WithdrawCommandProcessor(Bank bank) {
 		this.bank = bank;
 	}
 

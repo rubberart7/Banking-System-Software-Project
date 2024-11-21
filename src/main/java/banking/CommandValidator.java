@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class CommandValidator {
 	protected Bank bank;
 
-	public CommandValidator(Bank bank) {
+	protected CommandValidator(Bank bank) {
 		this.bank = bank;
 
 	}

@@ -6,7 +6,7 @@ import java.util.Arrays;
 public class CommandProcessor {
 	protected Bank bank;
 
-	public CommandProcessor(Bank bank) {
+	protected CommandProcessor(Bank bank) {
 		this.bank = bank;
 	}
 
