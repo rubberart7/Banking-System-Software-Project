@@ -2,11 +2,10 @@ package banking;
 
 import java.util.ArrayList;
 
-public class DepositCommandValidator {
-	private Bank bank;
+public class DepositCommandValidator extends CommandValidator {
 
 	public DepositCommandValidator(Bank bank) {
-		this.bank = bank;
+		super(bank);
 	}
 
 	public boolean validate(ArrayList<String> commandParts) {

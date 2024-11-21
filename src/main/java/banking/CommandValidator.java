@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CommandValidator {
-	private Bank bank;
+	protected Bank bank;
 
 	public CommandValidator(Bank bank) {
 		this.bank = bank;

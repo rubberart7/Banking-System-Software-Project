@@ -2,12 +2,10 @@ package banking;
 
 import java.util.ArrayList;
 
-public class DepositCommandProcessor {
-
-	private Bank bank;
+public class DepositCommandProcessor extends CommandProcessor {
 
 	public DepositCommandProcessor(Bank bank) {
-		this.bank = bank;
+		super(bank);
 	}
 
 	protected void process(ArrayList<String> commandParts) {

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CommandProcessor {
-	private Bank bank;
+	protected Bank bank;
 
 	public CommandProcessor(Bank bank) {
 		this.bank = bank;

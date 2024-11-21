@@ -3,13 +3,12 @@ package banking;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class CreateCommandValidator {
+public class CreateCommandValidator extends CommandValidator {
 	private static final ArrayList<String> VALID_ACCOUNT_TYPES = new ArrayList<>(
 			Arrays.asList("checking", "savings", "cd"));
-	private Bank bank;
 
 	public CreateCommandValidator(Bank bank) {
-		this.bank = bank;
+		super(bank);
 	}
 
 	protected boolean validate(ArrayList<String> commandParts) {

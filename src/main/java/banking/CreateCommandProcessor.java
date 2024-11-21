@@ -2,11 +2,10 @@ package banking;
 
 import java.util.ArrayList;
 
-public class CreateCommandProcessor {
-	private Bank bank;
+public class CreateCommandProcessor extends CommandProcessor {
 
 	public CreateCommandProcessor(Bank bank) {
-		this.bank = bank;
+		super(bank);
 	}
 
 	protected void process(ArrayList<String> commandParts) {
