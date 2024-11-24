@@ -23,33 +23,30 @@ public class CreateCommandValidator extends CommandValidator {
 		double aprValue = Double.parseDouble(stringApr);
 
 		if (idValue.length() != 8 || !idValue.matches("\\d{8}")) {
-			return false;
-		}
-		if (!VALID_ACCOUNT_TYPES.contains(accType)) {
-			return false;
-		}
-
-		if ((accType.equals("checking") || accType.equals("savings")) && (commandParts.size() != 4)) {
-			return false;
+			isValid = false;
+		} else if (!VALID_ACCOUNT_TYPES.contains(accType)) {
+			isValid = false;
 		}
 
-		if (accType.equals("cd")) {
+		else if ((accType.equals("checking") || accType.equals("savings")) && (commandParts.size() != 4)) {
+			isValid = false;
+		}
+
+		else if (accType.equals("cd")) {
 			if (commandParts.size() != 5) {
 				return false;
 			}
 			String minBalance = commandParts.get(4);
-			double minimumBalance = Double.parseDouble(minBalance);
-			if (minimumBalance < 1000 || minimumBalance > 10000) {
-				return false;
+			if (Double.parseDouble(minBalance) < 1000 || Double.parseDouble(minBalance) > 10000) {
+				isValid = false;
 			}
 		}
 
-		if (aprValue < 0 || aprValue > 10) {
-			return false;
+		else if (aprValue < 0 || aprValue > 10) {
+			isValid = false;
+		} else if (bank.accountExistsById(idValue)) {
+			isValid = false;
 		}
-		if (bank.accountExistsById(idValue)) {
-			return false;
-		}
-		return true;
+		return isValid;
 	}
 }
