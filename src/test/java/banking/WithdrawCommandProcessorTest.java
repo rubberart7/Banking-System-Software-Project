@@ -30,6 +30,6 @@ public class WithdrawCommandProcessorTest {
 		commandProcessor.processCommand("deposit 12345678 500");
 		commandProcessor.processCommand("withdraw 12345678 0");
 
-		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
+		assertEquals(500, bank.getAccounts().get("12345678").getBalance());
 	}
 }
