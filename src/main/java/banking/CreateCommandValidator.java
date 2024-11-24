@@ -12,7 +12,6 @@ public class CreateCommandValidator extends CommandValidator {
 	}
 
 	protected boolean validate(ArrayList<String> commandParts) {
-		boolean isValid = true;
 		if (commandParts.size() < 4) {
 			return false;
 		}
@@ -22,31 +21,36 @@ public class CreateCommandValidator extends CommandValidator {
 		String stringApr = commandParts.get(3);
 		double aprValue = Double.parseDouble(stringApr);
 
-		if (idValue.length() != 8 || !idValue.matches("\\d{8}")) {
-			isValid = false;
-		} else if (!VALID_ACCOUNT_TYPES.contains(accType)) {
-			isValid = false;
+		return isValidIdValue(idValue) && isValidAccountType(accType) && isValidAccountDetails(accType, commandParts)
+				&& isValidApr(aprValue) && !bank.accountExistsById(idValue);
+	}
+
+	private boolean isValidIdValue(String idValue) {
+		return idValue.length() == 8 && idValue.matches("\\d{8}");
+	}
+
+	private boolean isValidAccountType(String accType) {
+		return VALID_ACCOUNT_TYPES.contains(accType);
+	}
+
+	private boolean isValidAccountDetails(String accType, ArrayList<String> commandParts) {
+		if (accType.equals("checking") || accType.equals("savings")) {
+			return commandParts.size() == 4;
 		}
 
-		else if ((accType.equals("checking") || accType.equals("savings")) && (commandParts.size() != 4)) {
-			isValid = false;
+		if (accType.equals("cd")) {
+			return commandParts.size() == 5 && isValidCdBalance(commandParts.get(4));
 		}
 
-		else if (accType.equals("cd")) {
-			if (commandParts.size() != 5) {
-				return false;
-			}
-			String minBalance = commandParts.get(4);
-			if (Double.parseDouble(minBalance) < 1000 || Double.parseDouble(minBalance) > 10000) {
-				isValid = false;
-			}
-		}
+		return true;
+	}
 
-		else if (aprValue < 0 || aprValue > 10) {
-			isValid = false;
-		} else if (bank.accountExistsById(idValue)) {
-			isValid = false;
-		}
-		return isValid;
+	private boolean isValidCdBalance(String minBalance) {
+		double balance = Double.parseDouble(minBalance);
+		return balance >= 1000 && balance <= 10000;
+	}
+
+	private boolean isValidApr(double aprValue) {
+		return aprValue >= 0 && aprValue <= 10;
 	}
 }
