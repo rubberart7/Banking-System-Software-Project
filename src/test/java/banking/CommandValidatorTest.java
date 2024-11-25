@@ -18,6 +18,12 @@ public class CommandValidatorTest {
 	}
 
 	@Test
+	void command_validator_can_confirm_that_empty_command_is_invalid() {
+		boolean actual = commandValidator.validate("");
+		assertFalse(actual);
+	}
+
+	@Test
 	void command_validator_can_confirm_that_a_create_command_is_invalid() {
 		boolean actual = commandValidator.validate("create checkiing 12345678 3.2");
 		assertFalse(actual);

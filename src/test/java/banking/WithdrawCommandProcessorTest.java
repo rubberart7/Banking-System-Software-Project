@@ -44,6 +44,15 @@ public class WithdrawCommandProcessorTest {
 	}
 
 	@Test
+	void withdraw_more_than_balance_from_checking_makes_balance_0() {
+		commandProcessor.processCommand("create checking 12345678 1.2");
+		commandProcessor.processCommand("deposit 12345678 500");
+		commandProcessor.processCommand("withdraw 12345678 600");
+		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
+
+	}
+
+	@Test
 	void withdraw_from_savings_acc_decreases_the_balance_of_the_correct_acc() {
 		commandProcessor.processCommand("create savings 12345678 1.2");
 		commandProcessor.processCommand("deposit 12345678 500");
@@ -69,6 +78,15 @@ public class WithdrawCommandProcessorTest {
 		commandProcessor.processCommand("withdraw 12345678 0");
 
 		assertEquals(500, bank.getAccounts().get("12345678").getBalance());
+	}
+
+	@Test
+	void withdraw_more_than_balance_from_savings_makes_balance_0() {
+		commandProcessor.processCommand("create savings 12345678 1.2");
+		commandProcessor.processCommand("deposit 12345678 500");
+		commandProcessor.processCommand("withdraw 12345678 600");
+		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
+
 	}
 
 	@Test
