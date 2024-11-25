@@ -76,9 +76,51 @@ public class CommandValidatorTest {
 	void command_validator_can_confirm_that_a_deposit_command_is_valid() {
 		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("deposit 12345678 100");
+		assertTrue(actual);
+
+	}
+
+	@Test
+	void command_validator_can_confirm_that_a_deposit_command_is_valid_twice() {
+		bank.addRegularAccount("12345678", 2.1, "checking");
+		boolean actual = commandValidator.validate("deposit 12345678 100");
 		boolean actualTwo = commandValidator.validate("deposit 12345678 100");
 		assertTrue(actual);
 		assertTrue(actualTwo);
+
+	}
+
+	@Test
+	void command_validator_can_confirm_that_a_withdraw_command_is_valid() {
+		bank.addRegularAccount("12345678", 2.1, "checking");
+		boolean actual = commandValidator.validate("withdraw 12345678 100");
+		assertTrue(actual);
+	}
+
+	@Test
+	void command_validator_can_confirm_that_a_withdraw_command_is_valid_twice() {
+		bank.addRegularAccount("12345678", 2.1, "checking");
+		boolean actual = commandValidator.validate("withdraw 12345678 100");
+		boolean actualTwo = commandValidator.validate("withdraw 12345678 100");
+		assertTrue(actual);
+		assertTrue(actualTwo);
+
+	}
+
+	@Test
+	void command_validator_can_confirm_that_a_withdraw_command_is_invalid() {
+		bank.addRegularAccount("12345678", 2.1, "checking");
+		boolean actual = commandValidator.validate("withdrawa 12345678 100");
+		assertFalse(actual);
+	}
+
+	@Test
+	void command_validator_can_confirm_that_a_withdraw_command_is_invalid_twice() {
+		bank.addRegularAccount("12345678", 2.1, "checking");
+		boolean actual = commandValidator.validate("withdraww 12345678 100");
+		boolean actualTwo = commandValidator.validate("withdaraw 12345678 100");
+		assertFalse(actual);
+		assertFalse(actualTwo);
 
 	}
 

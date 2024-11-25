@@ -13,7 +13,7 @@ public class CommandValidator {
 
 	protected boolean validate(String command) {
 		ArrayList<String> commandParts = new ArrayList<>(Arrays.asList(command.split(" ")));
-		if (commandParts.size() < 3) {
+		if (commandParts.size() < 2) {
 			return false;
 		}
 		String commandType = commandParts.get(0);
@@ -30,6 +30,11 @@ public class CommandValidator {
 		else if (commandType.equalsIgnoreCase("withdraw")) {
 			WithdrawCommandValidator withdrawValidator = new WithdrawCommandValidator(bank);
 			return withdrawValidator.validate(commandParts);
+		}
+
+		else if (commandType.equalsIgnoreCase("pass")) {
+			PassTimeCommandValidator passTimeValidator = new PassTimeCommandValidator(bank);
+			return passTimeValidator.validate(commandParts);
 		}
 
 		return false;

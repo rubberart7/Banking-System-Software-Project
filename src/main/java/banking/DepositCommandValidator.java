@@ -14,9 +14,8 @@ public class DepositCommandValidator extends CommandValidator {
 		}
 
 		String idValue = commandParts.get(1);
-		String amount = commandParts.get(2);
 
-		double depositedAmount = parseAmount(amount);
+		double depositedAmount = parseAmount(commandParts.get(2));
 		if (depositedAmount < 0) {
 			return false;
 		}

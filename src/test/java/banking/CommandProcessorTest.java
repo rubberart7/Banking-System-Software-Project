@@ -70,4 +70,29 @@ public class CommandProcessorTest {
 
 	}
 
+	@Test
+	void command_processor_can_process_withdraw_command() {
+		bank.addRegularAccount("12345678", 2.0, "checking");
+		bank.getAccounts().get("12345678").deposit(500);
+
+		commandProcessor.processCommand("withdraw 12345678 100");
+		assertEquals(400, bank.getAccounts().get("12345678").getBalance());
+	}
+
+	@Test
+	void command_processor_can_process_withdraw_command_twice() {
+		bank.addRegularAccount("12345678", 2.0, "checking");
+		bank.addRegularAccount("87654321", 2.0, "checking");
+
+		bank.getAccounts().get("12345678").deposit(500);
+		bank.getAccounts().get("87654321").deposit(500);
+
+		commandProcessor.processCommand("withdraw 12345678 100");
+		commandProcessor.processCommand("withdraw 87654321 200");
+
+		assertEquals(400, bank.getAccounts().get("12345678").getBalance());
+		assertEquals(300, bank.getAccounts().get("87654321").getBalance());
+
+	}
+
 }
