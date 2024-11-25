@@ -8,7 +8,7 @@ public class DepositCommandValidator extends CommandValidator {
 		super(bank);
 	}
 
-	public boolean validate(ArrayList<String> commandParts) {
+	protected boolean validate(ArrayList<String> commandParts) {
 		if (commandParts.size() != 3) {
 			return false;
 		}
@@ -21,7 +21,7 @@ public class DepositCommandValidator extends CommandValidator {
 			return false;
 		}
 
-		return isValidId(idValue) && isValidAccount(idValue, depositedAmount);
+		return isValidId(idValue) && isValidAmount(idValue, depositedAmount);
 	}
 
 	private double parseAmount(String amount) {
@@ -36,14 +36,14 @@ public class DepositCommandValidator extends CommandValidator {
 		return idValue.length() == 8 && idValue.matches("\\d{8}");
 	}
 
-	private boolean isValidAccount(String idValue, double depositedAmount) {
+	private boolean isValidAmount(String idValue, double depositedAmount) {
 		String accountType = bank.getAccounts().get(idValue).getAccountType();
 
 		switch (accountType) {
 		case "checking":
-			return depositedAmount <= 1000;
+			return depositedAmount <= 1000 && depositedAmount >= 0;
 		case "savings":
-			return depositedAmount <= 2500;
+			return depositedAmount <= 2500 && depositedAmount >= 0;
 		case "cd":
 			return false;
 		default:

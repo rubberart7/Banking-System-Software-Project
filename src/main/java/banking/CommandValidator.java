@@ -16,15 +16,20 @@ public class CommandValidator {
 		if (commandParts.size() < 3) {
 			return false;
 		}
-		String commandType = commandParts.get(0).toLowerCase();
-		if (commandType.equals("create")) {
+		String commandType = commandParts.get(0);
+		if (commandType.equalsIgnoreCase("create")) {
 			CreateCommandValidator createValidator = new CreateCommandValidator(bank);
 			return createValidator.validate(commandParts);
 		}
 
-		else if (commandType.equals("deposit")) {
+		else if (commandType.equalsIgnoreCase("deposit")) {
 			DepositCommandValidator depositValidator = new DepositCommandValidator(bank);
 			return depositValidator.validate(commandParts);
+		}
+
+		else if (commandType.equalsIgnoreCase("withdraw")) {
+			WithdrawCommandValidator withdrawValidator = new WithdrawCommandValidator(bank);
+			return withdrawValidator.validate(commandParts);
 		}
 
 		return false;

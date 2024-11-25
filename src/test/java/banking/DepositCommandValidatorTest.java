@@ -133,7 +133,7 @@ public class DepositCommandValidatorTest {
 
 	@Test
 	void deposit_savings_is_missing_deposit_amount() {
-		bank.addRegularAccount("12345678", 2.1, "savingsaccount");
+		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("deposit 1235678");
 		assertFalse(actual);
 
@@ -188,7 +188,7 @@ public class DepositCommandValidatorTest {
 	}
 
 	@Test
-	void deposit_savings_command_has_all_valid_values_and_spelling() {
+	void deposit_command_has_all_valid_values_and_spelling() {
 		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("deposit 12345678 100");
 		assertTrue(actual);
