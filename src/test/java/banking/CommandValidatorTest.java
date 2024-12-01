@@ -124,4 +124,33 @@ public class CommandValidatorTest {
 
 	}
 
+	@Test
+	void command_validator_can_confirm_that_a_pass_time_command_is_valid() {
+		boolean actual = commandValidator.validate("pass 3");
+		assertTrue(actual);
+	}
+
+	@Test
+	void command_validator_can_confirm_that_a_pass_time_command_is_valid_twice() {
+		boolean actualOne = commandValidator.validate("pass 3");
+		boolean actualTwo = commandValidator.validate("pass 7");
+
+		assertTrue(actualOne);
+		assertTrue(actualTwo);
+	}
+
+	@Test
+	void command_validator_can_confirm_that_a_pass_time_command_is_invalid() {
+		boolean actual = commandValidator.validate("pass 3.2");
+		assertFalse(actual);
+	}
+
+	@Test
+	void command_validator_can_confirm_that_a_pass_time_command_is_invalid_twice() {
+		boolean actualOne = commandValidator.validate("pass 3.2");
+		boolean actualTwo = commandValidator.validate("pass 8.2");
+		assertFalse(actualOne);
+		assertFalse(actualTwo);
+	}
+
 }

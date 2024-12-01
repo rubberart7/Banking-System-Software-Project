@@ -2,11 +2,10 @@ package banking;
 
 import java.util.ArrayList;
 
-public class WithdrawCommandProcessor {
-	protected Bank bank;
+public class WithdrawCommandProcessor extends CommandProcessor {
 
 	protected WithdrawCommandProcessor(Bank bank) {
-		this.bank = bank;
+		super(bank);
 	}
 
 	protected void process(ArrayList<String> commandParts) {

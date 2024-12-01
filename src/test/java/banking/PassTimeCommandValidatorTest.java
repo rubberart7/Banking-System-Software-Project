@@ -18,6 +18,31 @@ public class PassTimeCommandValidatorTest {
 	}
 
 	@Test
+	void pass_time_command_is_empty_is_invalid() {
+		boolean actual = commandValidator.validate("");
+		assertFalse(actual);
+
+	}
+
+	@Test
+	void pass_time_command_has_correct_spelling_and_months_in_range_is_valid() {
+		boolean actual = commandValidator.validate("pass 7");
+		assertTrue(actual);
+	}
+
+	@Test
+	void pass_time_command_has_too_many_arguments_is_invalid() {
+		boolean actual = commandValidator.validate("pass 2 4");
+		assertFalse(actual);
+	}
+
+	@Test
+	void pass_time_command_has_few_many_arguments_is_invalid() {
+		boolean actual = commandValidator.validate("pass");
+		assertFalse(actual);
+	}
+
+	@Test
 	void pass_time_command_is_missing_month_value_is_invalid() {
 		boolean actual = commandValidator.validate("pass");
 		assertFalse(actual);

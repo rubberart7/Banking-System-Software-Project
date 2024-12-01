@@ -9,4 +9,5 @@ public class SavingsAccount extends Account {
 	protected String getAccountType() {
 		return "savings".toLowerCase();
 	}
+
 }

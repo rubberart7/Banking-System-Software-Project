@@ -2,9 +2,10 @@ package banking;
 
 public abstract class Account {
 	public static final double DEFAULT_STARTING_BALANCE = 0;
-	private final String idValue;
+	protected final String idValue;
 	protected double balance;
-	private double aprValue;
+	protected double aprValue;
+	protected int time;
 
 	protected Account(String idValue, double aprValue) {
 		this.balance = DEFAULT_STARTING_BALANCE;
@@ -36,6 +37,15 @@ public abstract class Account {
 		return balance;
 	}
 
+	protected void reduceBalance(double amount) {
+		if (amount >= 0 && balance >= amount) {
+			balance -= amount;
+		} else {
+			balance = 0;
+		}
+	}
+
 	protected abstract String getAccountType();
 
+//	protected abstract void passTime(int months);
 }
