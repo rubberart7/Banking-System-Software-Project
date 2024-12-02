@@ -5,9 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bank {
+	protected int time = 0;
 	private Map<String, Account> accounts;
-
-	private int time = 0;
 
 	protected Bank() {
 		accounts = new HashMap<>();
@@ -42,27 +41,39 @@ public class Bank {
 	}
 
 	protected void passTime(int months) {
-		ArrayList<String> accountsToRemove = new ArrayList<>();
 		time += months;
+		ArrayList<String> accountsToRemove = new ArrayList<>();
 		for (int i = 0; i < months; i++) {
-			for (String quickId : accounts.keySet()) {
-				Account account = accounts.get(quickId);
-
-				if (account.getBalance() == 0) {
-					accountsToRemove.add(quickId);
-					continue;
-				}
-				if (account.getBalance() < 100) {
-					account.reduceBalance(25);
-				}
-
-				account.passTimeAndCalcAPR(1);
-			}
+			processAccounts(accountsToRemove);
 		}
 
+		removeZeroBalanceAccounts(accountsToRemove);
+	}
+
+	private void processAccounts(ArrayList<String> accountsToRemove) {
+		for (String quickId : accounts.keySet()) {
+			Account account = accounts.get(quickId);
+			handleAccount(account, accountsToRemove);
+		}
+	}
+
+	private void handleAccount(Account account, ArrayList<String> accountsToRemove) {
+		if (account.getBalance() == 0) {
+			accountsToRemove.add(account.getIdValue());
+			return;
+		}
+
+		if (account.getBalance() < 100) {
+			account.reduceBalance(25);
+		}
+
+		account.passTimeAndCalcAPR(1);
+	}
+
+	private void removeZeroBalanceAccounts(ArrayList<String> accountsToRemove) {
 		for (String quickId : accountsToRemove) {
 			accounts.remove(quickId);
 		}
-
 	}
+
 }

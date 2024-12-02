@@ -21,10 +21,6 @@ public abstract class Account {
 		return idValue;
 	}
 
-	protected int getTime() {
-		return time;
-	}
-
 	protected void deposit(double amount) {
 		balance += amount;
 	}
@@ -49,7 +45,13 @@ public abstract class Account {
 		}
 	}
 
+	protected void passTimeAndCalcAPR(int months) {
+		time += months;
+		double aprDec = ((aprValue / 100) / 12);
+		double monthlyInterest = aprDec * balance;
+		balance += monthlyInterest;
+	}
+
 	protected abstract String getAccountType();
 
-	protected abstract void passTimeAndCalcAPR(int months);
 }
