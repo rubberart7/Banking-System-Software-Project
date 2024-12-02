@@ -12,4 +12,15 @@ public class CDAccount extends Account {
 		return "cd".toLowerCase();
 	}
 
+	@Override
+	protected void passTimeAndCalcAPR(int months) {
+		time += months;
+		double aprDec = ((aprValue / 100) / 12);
+		for (int i = 0; i < 4; i++) {
+			double monthlyInterest = aprDec * balance;
+			balance += monthlyInterest;
+		}
+
+	}
+
 }

@@ -7,6 +7,8 @@ import java.util.Map;
 public class Bank {
 	private Map<String, Account> accounts;
 
+	private int time = 0;
+
 	protected Bank() {
 		accounts = new HashMap<>();
 	}
@@ -41,6 +43,7 @@ public class Bank {
 
 	protected void passTime(int months) {
 		ArrayList<String> accountsToRemove = new ArrayList<>();
+		time += months;
 		for (int i = 0; i < months; i++) {
 			for (String quickId : accounts.keySet()) {
 				Account account = accounts.get(quickId);
@@ -52,6 +55,8 @@ public class Bank {
 				if (account.getBalance() < 100) {
 					account.reduceBalance(25);
 				}
+
+				account.passTimeAndCalcAPR(1);
 			}
 		}
 

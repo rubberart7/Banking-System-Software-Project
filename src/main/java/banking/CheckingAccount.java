@@ -10,4 +10,12 @@ public class CheckingAccount extends Account {
 		return "checking".toLowerCase();
 	}
 
+	@Override
+	protected void passTimeAndCalcAPR(int months) {
+		time += months;
+		double aprDec = ((aprValue / 100) / 12);
+		double monthlyInterest = aprDec * balance;
+		balance += monthlyInterest;
+	}
+
 }
