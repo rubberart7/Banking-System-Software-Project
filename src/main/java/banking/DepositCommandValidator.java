@@ -43,8 +43,6 @@ public class DepositCommandValidator extends CommandValidator {
 			return depositedAmount <= 1000 && depositedAmount >= 0;
 		case "savings":
 			return depositedAmount <= 2500 && depositedAmount >= 0;
-		case "cd":
-			return false;
 		default:
 			return false;
 		}

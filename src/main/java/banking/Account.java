@@ -39,15 +39,6 @@ public abstract class Account {
 		return balance;
 	}
 
-	protected void reduceBalance(double amount) {
-		if (amount >= 0 && balance >= amount) {
-			balance -= amount;
-		} else {
-			balance = 0;
-		}
-
-	}
-
 	protected void passTimeAndCalcAPR(int month) {
 		time += month;
 		double aprDec = ((aprValue / 100) / 12);
@@ -65,7 +56,7 @@ public abstract class Account {
 		monthlyWithdrawals += withdrawalNum;
 	}
 
-	public void addTime(int months) {
+	protected void addTime(int months) {
 		time += months;
 		monthlyWithdrawals = 0;
 	}

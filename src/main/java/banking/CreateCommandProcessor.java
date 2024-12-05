@@ -12,7 +12,7 @@ public class CreateCommandProcessor extends CommandProcessor {
 		if (commandParts.get(1).equals("cd")) {
 			bank.addCDAccount(commandParts.get(2), Double.parseDouble(commandParts.get(3)),
 					Double.parseDouble(commandParts.get(4)));
-		} else {
+		} else if (commandParts.get(1).equals("checking") || commandParts.get(1).equals("savings")) {
 			bank.addRegularAccount(commandParts.get(2), Double.parseDouble(commandParts.get(3)), commandParts.get(1));
 
 		}

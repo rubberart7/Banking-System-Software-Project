@@ -33,6 +33,10 @@ public class Bank {
 		return accounts.size();
 	}
 
+	protected int getAge() {
+		return time;
+	}
+
 	protected boolean accountExistsById(String quickId) {
 		if (accounts.get(quickId) != null) {
 			return true;
@@ -64,7 +68,7 @@ public class Bank {
 		}
 
 		if (account.getBalance() < 100) {
-			account.reduceBalance(25);
+			account.withdraw(25);
 		}
 
 		account.passTimeAndCalcAPR(1);
