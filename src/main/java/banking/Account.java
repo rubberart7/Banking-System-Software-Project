@@ -6,6 +6,7 @@ public abstract class Account {
 	protected double balance;
 	protected double aprValue;
 	protected int time;
+	protected int monthlyWithdrawals;
 
 	protected Account(String idValue, double aprValue) {
 		this.balance = DEFAULT_STARTING_BALANCE;
@@ -31,6 +32,7 @@ public abstract class Account {
 		} else {
 			balance = 0;
 		}
+
 	}
 
 	protected double getBalance() {
@@ -43,10 +45,11 @@ public abstract class Account {
 		} else {
 			balance = 0;
 		}
+
 	}
 
-	protected void passTimeAndCalcAPR(int months) {
-		time += months;
+	protected void passTimeAndCalcAPR(int month) {
+		time += month;
 		double aprDec = ((aprValue / 100) / 12);
 		double monthlyInterest = aprDec * balance;
 		balance += monthlyInterest;
@@ -54,4 +57,16 @@ public abstract class Account {
 
 	protected abstract String getAccountType();
 
+	protected int getAge() {
+		return time;
+	}
+
+	protected void addMonthlyWithdrawal(int withdrawalNum) {
+		monthlyWithdrawals += withdrawalNum;
+	}
+
+	public void addTime(int months) {
+		time += months;
+		monthlyWithdrawals = 0;
+	}
 }

@@ -1,7 +1,6 @@
 package banking;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -95,4 +94,26 @@ public class CommandProcessorTest {
 
 	}
 
+	@Test
+	void command_processor_can_process_pass_time_command() {
+		commandProcessor.processCommand("create checking 12345678 10.0");
+		commandProcessor.processCommand("deposit 12345678 99");
+
+		commandProcessor.processCommand("pass 6");
+		boolean exists = bank.accountExistsById("12345678");
+
+		assertFalse(exists);
+	}
+
+	@Test
+	void command_processor_can_process_pass_time_command_twice() {
+		commandProcessor.processCommand("create checking 12345678 10.0");
+		commandProcessor.processCommand("deposit 12345678 99");
+
+		commandProcessor.processCommand("pass 3");
+		commandProcessor.processCommand("pass 3");
+		boolean exists = bank.accountExistsById("12345678");
+
+		assertFalse(exists);
+	}
 }

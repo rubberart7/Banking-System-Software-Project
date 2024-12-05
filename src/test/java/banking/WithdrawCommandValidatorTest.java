@@ -54,6 +54,42 @@ public class WithdrawCommandValidatorTest {
 	}
 
 	@Test
+	void trying_to_withdraw_more_than_once_in_the_first_month_is_invalid() {
+		bank.addRegularAccount("12345678", 2.1, "savings");
+		boolean actualOne = commandValidator.validate("withdraw 12345678 401");
+		bank.getAccounts().get("12345678").addMonthlyWithdrawal(1);
+		boolean actualTwo = commandValidator.validate("withdraw 12345678 401");
+
+		assertTrue(actualOne);
+		assertFalse(actualTwo);
+	}
+
+	@Test
+	void withdrawing_again_from_savings_after_one_month_has_passed_is_valid() {
+		bank.addRegularAccount("12345678", 2.1, "savings");
+		boolean actualOne = commandValidator.validate("withdraw 12345678 401");
+		bank.getAccounts().get("12345678").addMonthlyWithdrawal(1);
+		bank.getAccounts().get("12345678").addTime(1);
+		boolean actualTwo = commandValidator.validate("withdraw 12345678 401");
+
+		assertTrue(actualOne);
+		assertTrue(actualTwo);
+	}
+
+	@Test
+	void trying_to_withdraw_from_savings_in_month_four_is_invalid() {
+		bank.addRegularAccount("12345678", 2.1, "savings");
+		bank.getAccounts().get("12345678").addTime(3);
+		boolean actualOne = commandValidator.validate("withdraw 12345678 401");
+		bank.getAccounts().get("12345678").addMonthlyWithdrawal(1);
+		boolean actualTwo = commandValidator.validate("withdraw 12345678 401");
+
+		assertTrue(actualOne);
+		assertFalse(actualTwo);
+
+	}
+
+	@Test
 	void withdraw_0_for_savings_acc_is_valid() {
 		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("withdraw 12345678 0");
@@ -66,6 +102,8 @@ public class WithdrawCommandValidatorTest {
 		boolean actual = commandValidator.validate("withdraw 12345678 1000");
 		assertTrue(actual);
 	}
+
+	// test typos/missing values/case insensitive/invalid values
 
 	@Test
 	void withdraw_over_1000_from_savings_acc_is_invalid() {
@@ -80,8 +118,6 @@ public class WithdrawCommandValidatorTest {
 		boolean actual = commandValidator.validate("withdraw 12345678 -1");
 		assertFalse(actual);
 	}
-
-	// test typos/missing values/case insensitive/invalid values
 
 	@Test
 	void withdraw_amount_is_missing() {
@@ -117,7 +153,7 @@ public class WithdrawCommandValidatorTest {
 	}
 
 	@Test
-	void withdraw_savings_with_missing_deposit_amount_is_invalid() {
+	void withdraw_savings_with_missing_withdraw_amount_is_invalid() {
 		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("withdraw 1235678");
 		assertFalse(actual);
@@ -132,7 +168,7 @@ public class WithdrawCommandValidatorTest {
 	}
 
 	@Test
-	void withdraw_checking_with_missing_deposit_amount_is_invalid() {
+	void withdraw_checking_with_missing_withdraw_amount_is_invalid() {
 		bank.addRegularAccount("12345678", 2.1, "checking");
 		boolean actual = commandValidator.validate("withdraw 1235678");
 		assertFalse(actual);
@@ -164,12 +200,63 @@ public class WithdrawCommandValidatorTest {
 		assertFalse(actual);
 	}
 
-//
 	@Test
 	void withdraw_command_has_all_valid_values_and_spelling() {
 		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("withdraw 12345678 100");
 		assertTrue(actual);
+	}
+
+	// cd account conditions
+	@Test
+	void withdraw_full_balance_from_cd_acc_after_12_months_have_passed_is_valid() {
+		bank.addCDAccount("12345678", 5.1, 1000);
+		bank.passTime(12);
+
+		boolean actual = commandValidator.validate("withdraw 12345678 1225.77");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	void withdraw_more_than_full_balance_from_cd_acc_after_12_months_have_passed_is_valid() {
+		bank.addCDAccount("12345678", 5.1, 1000);
+		bank.passTime(12);
+
+		boolean actual = commandValidator.validate("withdraw 12345678 20000.00");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	void withdraw_full_balance_before_12_months_have_passed_is_invalid() {
+		bank.addCDAccount("12345678", 5.1, 1000);
+		bank.passTime(11);
+
+		boolean actual = commandValidator.validate("withdraw 12345678 1205.15");
+
+		assertFalse(actual);
+
+	}
+
+	@Test
+	void not_withdrawing_full_balance_from_cd_after_12_months_has_passed_is_invalid() {
+		bank.addCDAccount("12345678", 5.1, 1000);
+		bank.passTime(12);
+		boolean actual = commandValidator.validate("withdraw 12345678 1224.77");
+
+		assertFalse(actual);
+	}
+
+	@Test
+	void withdrawing_negative_amount_from_cd_acc_after_12_months_is_invalid() {
+		bank.addCDAccount("12345678", 5.1, 1000);
+		bank.passTime(12);
+
+		boolean actual = commandValidator.validate("withdraw 12345678 -1");
+
+		assertFalse(actual);
+
 	}
 
 }

@@ -35,7 +35,7 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
-	void pass_time_for_checking_acc_with_balance_of_1000_and_apr_of_3_percent_calculates_correct_new_balance() {
+	void pass_time_for_checking_acc_with_balance_of_1000_and_apr_of_3_percent_calculates_correct_new_increased_balance() {
 		commandProcessor.processCommand("create checking 12345678 3.0");
 		commandProcessor.processCommand("deposit 12345678 1000");
 		commandProcessor.processCommand("pass 1");
@@ -45,7 +45,7 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
-	void pass_time_for_savings_acc_with_balance_of_1000_and_apr_of_3_percent_calculates_correct_new_balance() {
+	void pass_time_for_savings_acc_with_balance_of_1000_and_apr_of_3_percent_calculates_correct_new_increased_balance() {
 		commandProcessor.processCommand("create savings 12345678 3.0");
 		commandProcessor.processCommand("deposit 12345678 1000");
 		commandProcessor.processCommand("pass 1");
@@ -55,13 +55,58 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
-	void pass_time_for_cd_acc_with_balance_of_2000_and_two_point_one_percent_apr_calculates_correct_new_balance() {
+	void pass_time_for_cd_acc_with_balance_of_2000_and_two_point_one_percent_apr_calculates_correct_new_increased_balance() {
 		commandProcessor.processCommand("create cd 12345678 2.1 2000");
 		commandProcessor.processCommand("pass 1");
 
 		double actualBalance = bank.getAccounts().get("12345678").getBalance();
-		assertEquals(2014.0367928937578, actualBalance);
+		assertEquals(2014.036792893758, actualBalance, 0.01);
 
+	}
+
+//	add stuff with removal of accounts
+	@Test
+	void pass_time_for_checking_acc_causes_it_to_be_removed_after_deducting_balance_over_time() {
+		commandProcessor.processCommand("create checking 12345678 2.1");
+		commandProcessor.processCommand("deposit 12345678 99");
+
+		commandProcessor.processCommand("pass 5");
+		boolean exists = bank.accountExistsById("12345678");
+
+		assertFalse(exists);
+	}
+
+	@Test
+	void pass_time_for_savings_acc_causes_it_to_be_removed_after_deducting_balance_over_time() {
+		commandProcessor.processCommand("create savings 12345678 2.1");
+		commandProcessor.processCommand("deposit 12345678 99");
+
+		commandProcessor.processCommand("pass 5");
+		boolean exists = bank.accountExistsById("12345678");
+
+		assertFalse(exists);
+	}
+
+	@Test
+	void pass_time_for_checking_acc_with_high_apr_causes_it_to_be_removed_after_deducting_balance_over_time() {
+		commandProcessor.processCommand("create checking 12345678 10.0");
+		commandProcessor.processCommand("deposit 12345678 99");
+
+		commandProcessor.processCommand("pass 6");
+		boolean exists = bank.accountExistsById("12345678");
+
+		assertFalse(exists);
+	}
+
+	@Test
+	void pass_time_for_savings_acc_with_high_apr_causes_it_to_be_removed_after_deducting_balance_over_time() {
+		commandProcessor.processCommand("create savings 12345678 10.0");
+		commandProcessor.processCommand("deposit 12345678 99");
+
+		commandProcessor.processCommand("pass 6");
+		boolean exists = bank.accountExistsById("12345678");
+
+		assertFalse(exists);
 	}
 
 }

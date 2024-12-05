@@ -13,8 +13,8 @@ public class CDAccount extends Account {
 	}
 
 	@Override
-	protected void passTimeAndCalcAPR(int months) {
-		time += months;
+	protected void passTimeAndCalcAPR(int month) {
+		time += month;
 		double aprDec = ((aprValue / 100) / 12);
 		for (int i = 0; i < 4; i++) {
 			double monthlyInterest = aprDec * balance;

@@ -10,4 +10,8 @@ public class SavingsAccount extends Account {
 		return "savings".toLowerCase();
 	}
 
+	protected int getMonthlyWithdrawals() {
+		return monthlyWithdrawals;
+	}
+
 }
