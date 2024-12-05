@@ -121,4 +121,12 @@ public class WithdrawCommandProcessorTest {
 		assertEquals(300, bank.getAccounts().get("12345678").getBalance());
 	}
 
+	@Test
+	void withdrawing_the_entire_balance_from_cd_acc_makes_the_balance_zero() {
+		commandProcessor.processCommand("create cd 12345678 1.2 1000");
+
+		commandProcessor.processCommand("withdraw 12345678 1000");
+		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
+	}
+
 }

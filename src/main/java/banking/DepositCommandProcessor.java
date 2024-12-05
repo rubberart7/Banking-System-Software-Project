@@ -9,6 +9,9 @@ public class DepositCommandProcessor extends CommandProcessor {
 	}
 
 	protected void process(ArrayList<String> commandParts) {
-		bank.getAccounts().get(commandParts.get(1)).deposit(Double.parseDouble(commandParts.get(2)));
+		String idValue = commandParts.get(1);
+		Double amount = Double.parseDouble(commandParts.get(2));
+
+		bank.getAccounts().get(idValue).deposit(amount);
 	}
 }

@@ -47,11 +47,7 @@ public class WithdrawCommandValidator extends CommandValidator {
 
 	private boolean isValidToWithdraw(String idValue, double withdrawalAmount) {
 		Account account = bank.getAccounts().get(idValue);
-		double epsilon = 0.01;
-//		System.out.println(
-//				"The account balance is " + account.getBalance() + " and the withdrawal amount is " + withdrawalAmount);
-		if (account.getAge() >= 12 && (Math.abs(withdrawalAmount - account.getBalance()) <= epsilon
-				|| withdrawalAmount > account.getBalance())) {
+		if (account.getAge() >= 12 && (withdrawalAmount >= account.getBalance())) {
 
 			return true;
 		}

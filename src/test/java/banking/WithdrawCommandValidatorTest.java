@@ -54,7 +54,7 @@ public class WithdrawCommandValidatorTest {
 	}
 
 	@Test
-	void trying_to_withdraw_more_than_once_in_the_first_month_is_invalid() {
+	void trying_to_withdraw_more_than_once_from_savings_acc_in_the_first_month_is_invalid() {
 		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actualOne = commandValidator.validate("withdraw 12345678 401");
 		bank.getAccounts().get("12345678").addMonthlyWithdrawal(1);
@@ -77,7 +77,7 @@ public class WithdrawCommandValidatorTest {
 	}
 
 	@Test
-	void trying_to_withdraw_from_savings_in_month_four_is_invalid() {
+	void trying_to_withdraw_from_savings_acc_twice_in_month_four_is_invalid() {
 		bank.addRegularAccount("12345678", 2.1, "savings");
 		bank.getAccounts().get("12345678").addTime(3);
 		boolean actualOne = commandValidator.validate("withdraw 12345678 401");

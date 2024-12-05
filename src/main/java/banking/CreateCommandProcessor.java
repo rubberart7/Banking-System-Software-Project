@@ -9,11 +9,15 @@ public class CreateCommandProcessor extends CommandProcessor {
 	}
 
 	protected void process(ArrayList<String> commandParts) {
-		if (commandParts.get(1).equals("cd")) {
-			bank.addCDAccount(commandParts.get(2), Double.parseDouble(commandParts.get(3)),
-					Double.parseDouble(commandParts.get(4)));
-		} else if (commandParts.get(1).equals("checking") || commandParts.get(1).equals("savings")) {
-			bank.addRegularAccount(commandParts.get(2), Double.parseDouble(commandParts.get(3)), commandParts.get(1));
+		String accType = commandParts.get(1).toLowerCase();
+		String idValue = commandParts.get(2);
+		Double aprValue = Double.parseDouble(commandParts.get(3));
+
+		if (accType.equals("cd")) {
+			Double initialBalance = Double.parseDouble(commandParts.get(4));
+			bank.addCDAccount(idValue, aprValue, initialBalance);
+		} else if (accType.equals("checking") || commandParts.get(1).equals("savings")) {
+			bank.addRegularAccount(idValue, aprValue, accType);
 
 		}
 	}
