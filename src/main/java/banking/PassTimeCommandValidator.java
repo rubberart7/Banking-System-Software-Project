@@ -12,9 +12,18 @@ public class PassTimeCommandValidator extends CommandValidator {
 			return false;
 		}
 
-		int months = parseMonths(commandParts.get(1));
+		String months = commandParts.get(1);
 
-		return isValidMonthValue(months);
+		return canParseMonths(months) && isValidMonthValue(parseMonths(months));
+	}
+
+	private boolean canParseMonths(String months) {
+		try {
+			Integer.parseInt(months);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 
 	private boolean isValidMonthValue(int months) {
@@ -25,11 +34,7 @@ public class PassTimeCommandValidator extends CommandValidator {
 	}
 
 	private int parseMonths(String monthsAmount) {
-		try {
-			return Integer.parseInt(monthsAmount);
-		} catch (NumberFormatException e) {
-			return -1;
-		}
+		return Integer.parseInt(monthsAmount);
 	}
 
 }

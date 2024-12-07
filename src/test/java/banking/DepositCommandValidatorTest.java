@@ -17,6 +17,37 @@ public class DepositCommandValidatorTest {
 
 	}
 
+	@Test
+	void deposit_into_an_acc_that_does_not_exist_and_there_are_no_accs_in_the_bank_is_invalid() {
+		boolean actual = commandValidator.validate("deposit 12345678 100");
+		assertFalse(actual);
+	}
+
+	@Test
+	void deposit_into_an_acc_that_does_not_exist_and_there_are_some_accs_in_the_bank_is_invalid() {
+		bank.addRegularAccount("12345670", 3.0, "checking");
+		bank.addRegularAccount("01234567", 3.0, "savings");
+		boolean actual = commandValidator.validate("deposit 12345678 100");
+		assertFalse(actual);
+	}
+
+	@Test
+	void deposit_into_an_acc_that_exists_and_it_is_the_only_acc_in_the_bank_is_valid() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		boolean actual = commandValidator.validate("deposit 12345678 100");
+		assertTrue(actual);
+
+	}
+
+	@Test
+	void deposit_into_an_acc_that_exists_and_there_are_many_accs_is_valid() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		bank.addRegularAccount("12345670", 3.0, "savings");
+		boolean actual = commandValidator.validate("deposit 12345678 100");
+		assertTrue(actual);
+
+	}
+
 //    cant deposit values outside ranges
 	@Test
 	void deposit_negative_amount_is_invalid() {

@@ -14,28 +14,13 @@ public class DepositCommandValidator extends CommandValidator {
 		}
 
 		String idValue = commandParts.get(1);
+		String depositedAmount = commandParts.get(2);
 
-		double depositedAmount = parseAmount(commandParts.get(2));
-		if (depositedAmount < 0) {
-			return false;
-		}
-
-		return isValidId(idValue) && isValidAmount(idValue, depositedAmount);
+		return isValidId(idValue) && accountExists(idValue) && canParseAmount(depositedAmount)
+				&& isValidAmountToDeposit(idValue, parseAmount(depositedAmount));
 	}
 
-	private double parseAmount(String amount) {
-		try {
-			return Double.parseDouble(amount);
-		} catch (NumberFormatException e) {
-			return -1;
-		}
-	}
-
-	private boolean isValidId(String idValue) {
-		return idValue.length() == 8 && idValue.matches("\\d{8}");
-	}
-
-	private boolean isValidAmount(String idValue, double depositedAmount) {
+	private boolean isValidAmountToDeposit(String idValue, double depositedAmount) {
 		String accountType = bank.getAccounts().get(idValue).getAccountType();
 
 		switch (accountType) {

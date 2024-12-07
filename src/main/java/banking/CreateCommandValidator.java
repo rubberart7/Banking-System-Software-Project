@@ -21,12 +21,8 @@ public class CreateCommandValidator extends CommandValidator {
 		String stringApr = commandParts.get(3);
 		double aprValue = Double.parseDouble(stringApr);
 
-		return isValidIdValue(idValue) && isValidAccountType(accType) && isValidAccountDetails(accType, commandParts)
-				&& isValidApr(aprValue) && !bank.accountExistsById(idValue);
-	}
-
-	private boolean isValidIdValue(String idValue) {
-		return idValue.length() == 8 && idValue.matches("\\d{8}");
+		return isValidId(idValue) && isValidAccountType(accType) && isValidAccountDetails(accType, commandParts)
+				&& isValidApr(aprValue) && !accountExists(idValue);
 	}
 
 	private boolean isValidAccountType(String accType) {
