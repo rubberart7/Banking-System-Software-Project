@@ -33,14 +33,14 @@ public class CommandProcessorTest {
 
 	@Test
 	void command_processor_can_process_create_command() {
-		commandProcessor.processCommand("create checking 12345678 2.1");
+		commandProcessor.process("create checking 12345678 2.1");
 		assertAccountCreated("create checking 12345678 2.1");
 	}
 
 	@Test
 	void command_processor_can_process_create_command_twice() {
-		commandProcessor.processCommand("create checking 12345678 2.1");
-		commandProcessor.processCommand("create checking 87654321 2.1");
+		commandProcessor.process("create checking 12345678 2.1");
+		commandProcessor.process("create checking 87654321 2.1");
 
 		assertAccountCreated("create checking 12345678 2.1");
 		assertAccountCreated("create checking 87654321 2.1");
@@ -51,7 +51,7 @@ public class CommandProcessorTest {
 		bank.addRegularAccount("12345678", 2.0, "checking");
 		bank.addRegularAccount("87654321", 2.0, "checking");
 
-		commandProcessor.processCommand("deposit 12345678 100");
+		commandProcessor.process("deposit 12345678 100");
 
 		assertEquals(100, bank.getAccounts().get("12345678").getBalance());
 	}
@@ -61,8 +61,8 @@ public class CommandProcessorTest {
 		bank.addRegularAccount("12345678", 2.0, "checking");
 		bank.addRegularAccount("87654321", 2.0, "checking");
 
-		commandProcessor.processCommand("deposit 12345678 100");
-		commandProcessor.processCommand("deposit 87654321 200");
+		commandProcessor.process("deposit 12345678 100");
+		commandProcessor.process("deposit 87654321 200");
 
 		assertEquals(100, bank.getAccounts().get("12345678").getBalance());
 		assertEquals(200, bank.getAccounts().get("87654321").getBalance());
@@ -74,7 +74,7 @@ public class CommandProcessorTest {
 		bank.addRegularAccount("12345678", 2.0, "checking");
 		bank.getAccounts().get("12345678").deposit(500);
 
-		commandProcessor.processCommand("withdraw 12345678 100");
+		commandProcessor.process("withdraw 12345678 100");
 		assertEquals(400, bank.getAccounts().get("12345678").getBalance());
 	}
 
@@ -86,8 +86,8 @@ public class CommandProcessorTest {
 		bank.getAccounts().get("12345678").deposit(500);
 		bank.getAccounts().get("87654321").deposit(500);
 
-		commandProcessor.processCommand("withdraw 12345678 100");
-		commandProcessor.processCommand("withdraw 87654321 200");
+		commandProcessor.process("withdraw 12345678 100");
+		commandProcessor.process("withdraw 87654321 200");
 
 		assertEquals(400, bank.getAccounts().get("12345678").getBalance());
 		assertEquals(300, bank.getAccounts().get("87654321").getBalance());
@@ -96,10 +96,10 @@ public class CommandProcessorTest {
 
 	@Test
 	void command_processor_can_process_pass_time_command() {
-		commandProcessor.processCommand("create checking 12345678 10.0");
-		commandProcessor.processCommand("deposit 12345678 99");
+		commandProcessor.process("create checking 12345678 10.0");
+		commandProcessor.process("deposit 12345678 99");
 
-		commandProcessor.processCommand("pass 6");
+		commandProcessor.process("pass 6");
 		boolean exists = bank.accountExistsById("12345678");
 
 		assertFalse(exists);
@@ -107,11 +107,11 @@ public class CommandProcessorTest {
 
 	@Test
 	void command_processor_can_process_pass_time_command_twice() {
-		commandProcessor.processCommand("create checking 12345678 10.0");
-		commandProcessor.processCommand("deposit 12345678 99");
+		commandProcessor.process("create checking 12345678 10.0");
+		commandProcessor.process("deposit 12345678 99");
 
-		commandProcessor.processCommand("pass 3");
-		commandProcessor.processCommand("pass 3");
+		commandProcessor.process("pass 3");
+		commandProcessor.process("pass 3");
 		boolean exists = bank.accountExistsById("12345678");
 
 		assertFalse(exists);
