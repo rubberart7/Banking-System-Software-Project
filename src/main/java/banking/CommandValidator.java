@@ -55,23 +55,14 @@ public class CommandValidator {
 	}
 
 	protected boolean accountExists(String idValue) {
-		if (bank.accountExistsById(idValue)) {
-			String accountType = bank.getAccounts().get(idValue).getAccountType();
-			System.out.println("Returning true from " + accountType + " existing!");
-			return true;
-		} else {
-			System.out.println("Returning false because account for " + idValue + " doesnt exist!");
-			return false;
-		}
+		return bank.accountExistsById(idValue);
 	}
 
 	protected boolean onlyOneWithdrawal(String idValue) {
 		SavingsAccount account = (SavingsAccount) bank.getAccounts().get(idValue);
 		if (account.getMonthlyWithdrawals() < 1) {
-			System.out.println("Returned true in onlyOneWithdrawal");
 			return true;
 		}
-		System.out.println("Returned false in onlyOneWithdrawal");
 
 		return false;
 	}
@@ -79,11 +70,9 @@ public class CommandValidator {
 	protected boolean canWithdrawFromCD(String idValue, double amount) {
 		Account account = bank.getAccounts().get(idValue);
 		if (account.getAge() >= 12 && (amount >= account.getBalance())) {
-			System.out.println("Returned True in canWithdrawFromCD");
+
 			return true;
 		}
-		System.out.println("Returned false in canWithdrawFromCD");
-		System.out.println("Account age is " + account.getAge() + " cannot withdraw!");
 		return false;
 
 	}
@@ -95,10 +84,8 @@ public class CommandValidator {
 	protected boolean canParseAmount(String amount) {
 		try {
 			Double.parseDouble(amount);
-			System.out.println("Returned true in canParseAmount");
 			return true;
 		} catch (NumberFormatException e) {
-			System.out.println("Returned false in canParseAmount");
 
 			return false;
 		}
