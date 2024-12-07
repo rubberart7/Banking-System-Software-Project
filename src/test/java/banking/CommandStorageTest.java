@@ -10,9 +10,11 @@ public class CommandStorageTest {
 	private final String INVALID_DEPOSIT_COMMAND = "depositt checking 12345678";
 	CommandStorage commandStorage;
 
+	Bank bank;
+
 	@BeforeEach
 	void setUp() {
-		commandStorage = new CommandStorage();
+		commandStorage = new CommandStorage(bank);
 	}
 
 	@Test

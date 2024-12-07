@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bank {
+	private final ArrayList<String> accountsInOrder = new ArrayList<>();
 	protected int time = 0;
 	private Map<String, Account> accounts;
 
@@ -23,10 +24,13 @@ public class Bank {
 			accounts.put(quickId, new SavingsAccount(quickId, quickApr));
 
 		}
+
+		accountsInOrder.add(quickId);
 	}
 
 	protected void addCDAccount(String quickId, double quickApr, double quickInitialBalance) {
 		accounts.put(quickId, new CDAccount(quickId, quickApr, quickInitialBalance));
+		accountsInOrder.add(quickId);
 	}
 
 	protected int getSize() {
@@ -77,7 +81,11 @@ public class Bank {
 	private void removeZeroBalanceAccounts(ArrayList<String> accountsToRemove) {
 		for (String quickId : accountsToRemove) {
 			accounts.remove(quickId);
+			accountsInOrder.remove(quickId);
 		}
 	}
 
+	protected ArrayList<String> getAccountsInOrder() {
+		return accountsInOrder;
+	}
 }

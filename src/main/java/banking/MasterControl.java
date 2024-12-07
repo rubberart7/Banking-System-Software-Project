@@ -17,11 +17,12 @@ public class MasterControl {
 	public List<String> start(List<String> input) {
 		for (String command : input) {
 			if (commandValidator.validate(command)) {
+				commandStorage.addValidCommand(command);
 				commandProcessor.process(command);
 			} else {
 				commandStorage.addInvalidCommand(command);
 			}
 		}
-		return commandStorage.getInvalidCommands();
+		return commandStorage.getOutput();
 	}
 }
