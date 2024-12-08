@@ -42,6 +42,7 @@ public class CommandStorage {
 	private void storeCommandForEachAccount(String idValue, String command) {
 		if (validCommands.get(idValue) != null) {
 			validCommands.get(idValue).add(command);
+
 		} else if (validCommands.get(idValue) == null) {
 			validCommands.put(idValue, new ArrayList<>());
 			validCommands.get(idValue).add(command);
@@ -56,9 +57,7 @@ public class CommandStorage {
 				output.addAll(validCommands.get(idValue));
 			}
 		}
-		if (invalidCommands != null) {
-			output.addAll(invalidCommands);
-		}
+		output.addAll(invalidCommands);
 		return output;
 	}
 

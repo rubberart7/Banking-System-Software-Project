@@ -116,4 +116,29 @@ public class CommandProcessorTest {
 
 		assertFalse(exists);
 	}
+
+	@Test
+	void command_processor_can_process_the_transfer_command() {
+		commandProcessor.process("create checking 12345678 3.0");
+		commandProcessor.process("create checking 87654321 2.0");
+		commandProcessor.process("deposit 12345678 1000");
+
+		commandProcessor.process("transfer 12345678 87654321 300");
+
+		assertEquals(700, bank.getAccounts().get("12345678").getBalance());
+		assertEquals(300, bank.getAccounts().get("87654321").getBalance());
+	}
+
+	@Test
+	void command_processor_can_process_the_transfer_command_twice() {
+		commandProcessor.process("create checking 12345678 3.0");
+		commandProcessor.process("create checking 87654321 2.0");
+		commandProcessor.process("deposit 12345678 1000");
+
+		commandProcessor.process("transfer 12345678 87654321 300");
+		commandProcessor.process("transfer 87654321 12345678 100");
+
+		assertEquals(800, bank.getAccounts().get("12345678").getBalance());
+		assertEquals(200, bank.getAccounts().get("87654321").getBalance());
+	}
 }

@@ -1,7 +1,6 @@
 package banking;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -338,6 +337,30 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
+	void pass_time_causes_cd_acc_to_be_removed_after_a_full_withdrawal_happens() {
+		commandProcessor.process("create cd 12345678 0 1000");
+		commandProcessor.process("withdraw 12345678 1000");
+
+		commandProcessor.process("pass 1");
+
+		Boolean exists = bank.accountExistsById("12345678");
+
+		assertFalse(exists);
+	}
+
+	@Test
+	void pass_time_causes_cd_acc_to_be_removed_after_a_full_withdrawal_happens_even_if_more_than_one_month_passed() {
+		commandProcessor.process("create cd 12345678 0 1000");
+		commandProcessor.process("withdraw 12345678 1000");
+
+		commandProcessor.process("pass 3");
+
+		Boolean exists = bank.accountExistsById("12345678");
+
+		assertFalse(exists);
+	}
+
+	@Test
 	void pass_time_for_checking_acc_with_high_apr_causes_it_to_be_removed_after_deducting_balance_over_time() {
 		commandProcessor.process("create checking 12345678 10.0");
 		commandProcessor.process("deposit 12345678 99");
@@ -349,6 +372,17 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
+	void pass_time_for_checking_acc_with_high_apr_causes_it_to_remain_even_after_deducting_balance_over_time_if_not_enough_time_has_passed() {
+		commandProcessor.process("create checking 12345678 10.0");
+		commandProcessor.process("deposit 12345678 99");
+
+		commandProcessor.process("pass 5");
+		boolean exists = bank.accountExistsById("12345678");
+
+		assertTrue(exists);
+	}
+
+	@Test
 	void pass_time_for_savings_acc_with_high_apr_causes_it_to_be_removed_after_deducting_balance_over_time() {
 		commandProcessor.process("create savings 12345678 10.0");
 		commandProcessor.process("deposit 12345678 99");
@@ -357,6 +391,17 @@ public class PassTimeCommandProcessorTest {
 		boolean exists = bank.accountExistsById("12345678");
 
 		assertFalse(exists);
+	}
+
+	@Test
+	void pass_time_for_savings_acc_with_high_apr_causes_it_to_remain_even_after_deducting_balance_over_time_if_not_enough_time_has_passed() {
+		commandProcessor.process("create savings 12345678 10.0");
+		commandProcessor.process("deposit 12345678 99");
+
+		commandProcessor.process("pass 5");
+		boolean exists = bank.accountExistsById("12345678");
+
+		assertTrue(exists);
 	}
 
 //	pass time balance reductions with being under 100 dollars

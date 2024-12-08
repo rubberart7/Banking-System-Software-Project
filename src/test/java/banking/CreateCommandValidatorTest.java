@@ -17,6 +17,25 @@ public class CreateCommandValidatorTest {
 
 	}
 
+	@Test
+	void can_create_checking_acc_with_the_same_id_if_the_previous_acc_is_deleted() {
+		bank.addRegularAccount("12345678", 3.0, "savings");
+		bank.passTime(1);
+
+		boolean actual = commandValidator.validate("create checking 12345678 3.0");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	void cannot_create_checking_acc_with_the_same_id_if_there_is_still_an_acc_with_that_id() {
+		bank.addRegularAccount("12345678", 3.0, "savings");
+
+		boolean actual = commandValidator.validate("create checking 12345678 3.0");
+
+		assertFalse(actual);
+	}
+
 	// test with missing arguments
 	@Test
 	void create_checking_acc_with_missing_create_command() {

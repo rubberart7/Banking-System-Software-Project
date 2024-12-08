@@ -55,7 +55,13 @@ public class CommandValidator {
 	}
 
 	protected boolean accountExists(String idValue) {
-		return bank.accountExistsById(idValue);
+		if (bank.accountExistsById(idValue)) {
+			System.out.println("Making the account!");
+			return true;
+		} else {
+			System.out.println("ID already exists");
+			return false;
+		}
 	}
 
 	protected boolean onlyOneWithdrawal(String idValue) {

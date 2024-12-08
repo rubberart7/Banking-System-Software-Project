@@ -153,4 +153,56 @@ public class CommandValidatorTest {
 		assertFalse(actualTwo);
 	}
 
+	@Test
+	void setCommandValidator_can_confirm_that_a_transfer_command_is_valid() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		bank.addRegularAccount("87654321", 3.0, "savings");
+		bank.getAccounts().get("12345678").deposit(800);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 300");
+
+		assertTrue(actual);
+
+	}
+
+	@Test
+	void setCommandValidator_can_confirm_that_a_transfer_command_is_valid_twice() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		bank.addRegularAccount("87654321", 3.0, "savings");
+		bank.getAccounts().get("12345678").deposit(800);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 300");
+		boolean actualTwo = commandValidator.validate("transfer 87654321 12345678 300");
+
+		assertTrue(actual);
+		assertTrue(actualTwo);
+
+	}
+
+	@Test
+	void setCommandValidator_can_confirm_that_a_transfer_command_is_invalid() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		bank.addRegularAccount("87654321", 3.0, "savings");
+		bank.getAccounts().get("12345678").deposit(800);
+
+		boolean actual = commandValidator.validate("transfer 12346578 87654321 401");
+
+		assertFalse(actual);
+
+	}
+
+	@Test
+	void setCommandValidator_can_confirm_that_a_transfer_command_is_invalid_twice() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		bank.addRegularAccount("87654321", 3.0, "savings");
+		bank.getAccounts().get("12345678").deposit(800);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 401");
+		boolean actualTwo = commandValidator.validate("transfer 87654321 12345678 1001");
+
+		assertFalse(actual);
+		assertFalse(actualTwo);
+
+	}
+
 }
