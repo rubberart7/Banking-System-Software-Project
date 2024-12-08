@@ -15,9 +15,14 @@ public class TransferCommandValidator extends CommandValidator {
 		String idValueTwo = commandParts.get(2);
 		String transferAmount = commandParts.get(3);
 
-		return isValidId(idValueOne) && isValidId(idValueTwo) && accountExists(idValueOne) && accountExists(idValueTwo)
-				&& notCDAccount(idValueOne) && notCDAccount(idValueTwo) && canParseAmount(transferAmount)
+		return isValidId(idValueOne) && isValidId(idValueTwo) && notSameID(idValueOne, idValueTwo)
+				&& accountExists(idValueOne) && accountExists(idValueTwo) && notCDAccount(idValueOne)
+				&& notCDAccount(idValueTwo) && canParseAmount(transferAmount)
 				&& isValidAmountToWithdraw(idValueOne, parseAmount(transferAmount));
+	}
+
+	private boolean notSameID(String idValueOne, String idValueTwo) {
+		return (!(idValueOne.equals(idValueTwo)));
 	}
 
 	private boolean notCDAccount(String idValue) {
