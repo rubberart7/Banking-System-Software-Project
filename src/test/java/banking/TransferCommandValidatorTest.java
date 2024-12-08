@@ -433,4 +433,10 @@ public class TransferCommandValidatorTest {
 		assertTrue(actual);
 	}
 
+	@Test
+	void transfer_to_and_from_the_same_acc_is_invalid() {
+		boolean actual = commandValidator.validate("transfer 12345678 12345678 200");
+		assertFalse(actual);
+	}
+
 }
