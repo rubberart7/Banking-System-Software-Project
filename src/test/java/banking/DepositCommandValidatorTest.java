@@ -24,7 +24,7 @@ public class DepositCommandValidatorTest {
 	}
 
 	@Test
-	void deposit_into_an_acc_that_does_not_exist_and_there_are_some_accs_in_the_bank_is_invalid() {
+	void deposit_into_an_acc_that_does_not_exist_and_there_are_some_other_accs_in_the_bank_is_invalid() {
 		bank.addRegularAccount("12345670", 3.0, "checking");
 		bank.addRegularAccount("01234567", 3.0, "savings");
 		boolean actual = commandValidator.validate("deposit 12345678 100");
@@ -163,7 +163,7 @@ public class DepositCommandValidatorTest {
 	}
 
 	@Test
-	void deposit_savings_is_missing_deposit_amount_for() {
+	void deposit_savings_is_missing_deposit_amount() {
 		bank.addRegularAccount("12345678", 2.1, "savings");
 		boolean actual = commandValidator.validate("deposit 1235678");
 		assertFalse(actual);

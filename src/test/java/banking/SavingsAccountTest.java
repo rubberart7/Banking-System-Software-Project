@@ -19,4 +19,10 @@ public class SavingsAccountTest {
 
 		assertEquals(account.DEFAULT_STARTING_BALANCE, actual);
 	}
+
+	@Test
+	void savings_acc_returns_correct_acc_type() {
+		String accountType = account.getAccountType();
+		assertEquals("savings", accountType);
+	}
 }

@@ -20,4 +20,11 @@ public class CDAccountTest {
 		assertEquals(200, actual);
 
 	}
+
+	@Test
+	void cd_returns_correct_acc_type() {
+		String actual = cdAccount.getAccountType();
+
+		assertEquals("cd", actual);
+	}
 }

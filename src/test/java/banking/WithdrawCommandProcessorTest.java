@@ -130,7 +130,7 @@ public class WithdrawCommandProcessorTest {
 	}
 
 	@Test
-	void withdrawing_the_more_than_the_balance_from_cd_acc_makes_the_balance_zero() {
+	void withdrawing_more_than_the_balance_from_cd_acc_makes_the_balance_zero() {
 		commandProcessor.process("create cd 12345678 1.2 1000");
 
 		commandProcessor.process("withdraw 12345678 2000");

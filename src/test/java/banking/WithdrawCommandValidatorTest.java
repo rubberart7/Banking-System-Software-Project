@@ -32,7 +32,7 @@ public class WithdrawCommandValidatorTest {
 	}
 
 	@Test
-	void withdrawing_from_a_checking_acc_that_does_exists_when_it_is_the_only_acc_is_valid() {
+	void withdrawing_from_a_checking_acc_that_does_exist_when_it_is_the_only_acc_is_valid() {
 		bank.addRegularAccount("12345678", 3.0, "checking");
 		bank.getAccounts().get("12345678").deposit(500);
 		boolean actual = commandValidator.validate("withdraw 12345678 100");
@@ -325,7 +325,7 @@ public class WithdrawCommandValidatorTest {
 	}
 
 	@Test
-	void not_withdrawing_full_balance_from_cd_after_12_months_has_passed_is_invalid() {
+	void not_withdrawing_full_balance_and_trying_to_withdraw_partially_from_cd_after_12_months_has_passed_is_invalid() {
 		bank.addCDAccount("12345678", 5.1, 1000);
 		bank.passTime(12);
 		boolean actual = commandValidator.validate("withdraw 12345678 1224.77");

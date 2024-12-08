@@ -73,4 +73,8 @@ public class CommandStorage {
 		return capitalizedAccType + " " + account.getIdValue() + " " + formattedBalance + " " + formattedAPR;
 
 	}
+
+	protected void removeCommandsForAccount(String idValue) {
+		validCommands.remove(idValue);
+	}
 }

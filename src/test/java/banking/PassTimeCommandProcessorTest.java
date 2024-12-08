@@ -31,9 +31,9 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
-	void pass_time_of_the_maximum_of_61_months_makes_the_age_of_the_bank_increase_by_61_months() {
-		commandProcessor.process("pass 61");
-		assertEquals(61, bank.getAge());
+	void pass_time_of_the_maximum_of_60_months_makes_the_age_of_the_bank_increase_by_60_months() {
+		commandProcessor.process("pass 60");
+		assertEquals(60, bank.getAge());
 
 	}
 
@@ -48,13 +48,13 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
-	void pass_time_of_of_the_maximum_of_61_months_increases_the_age_of_the_checking_acc_by_61_months() {
+	void pass_time_of_of_the_maximum_of_60_months_increases_the_age_of_the_checking_acc_by_60_months() {
 		commandProcessor.process("create checking 12345678 3.0");
 		commandProcessor.process("deposit 12345678 1000");
 
-		commandProcessor.process("pass 61");
+		commandProcessor.process("pass 60");
 
-		assertEquals(61, bank.getAccounts().get("12345678").getAge());
+		assertEquals(60, bank.getAccounts().get("12345678").getAge());
 	}
 
 	@Test
@@ -68,13 +68,13 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
-	void pass_time_of_of_the_maximum_of_61_months_increases_the_age_of_the_savings_acc_by_61_months() {
+	void pass_time_of_of_the_maximum_of_60_months_increases_the_age_of_the_savings_acc_by_60_months() {
 		commandProcessor.process("create savings 12345678 3.0");
 		commandProcessor.process("deposit 12345678 1000");
 
-		commandProcessor.process("pass 61");
+		commandProcessor.process("pass 60");
 
-		assertEquals(61, bank.getAccounts().get("12345678").getAge());
+		assertEquals(60, bank.getAccounts().get("12345678").getAge());
 	}
 
 	@Test
@@ -87,18 +87,37 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
-	void pass_time_of_maximum_of_61_months_increase_the_age_of_the_cd_account_by_61_months() {
+	void pass_time_of_maximum_of_60_months_increase_the_age_of_the_cd_account_by_60_months() {
 		commandProcessor.process("create cd 12345678 3.0 1000");
-		commandProcessor.process("pass 61");
+		commandProcessor.process("pass 60");
 
-		assertEquals(61, bank.getAccounts().get("12345678").getAge());
+		assertEquals(60, bank.getAccounts().get("12345678").getAge());
 
 	}
 
 	@Test
-	void pass_time_increases_the_age_of_the_checking_acc_properly() {
+	void pass_time_increases_the_age_of_the_checking_acc_properly_when_time_added_is_between_1_and_60() {
 		commandProcessor.process("create checking 12345678 3.0");
 		commandProcessor.process("deposit 12345678 100");
+
+		commandProcessor.process("pass 3");
+
+		assertEquals(3, bank.getAccounts().get("12345678").getAge());
+	}
+
+	@Test
+	void pass_time_increases_the_age_of_the_savings_acc_properly_when_time_added_is_between_1_and_60() {
+		commandProcessor.process("create savings 12345678 3.0");
+		commandProcessor.process("deposit 12345678 100");
+
+		commandProcessor.process("pass 3");
+
+		assertEquals(3, bank.getAccounts().get("12345678").getAge());
+	}
+
+	@Test
+	void pass_time_increases_the_age_of_the_cd_acc_properly_when_time_added_is_between_1_and_60() {
+		commandProcessor.process("create cd 12345678 3.0 1000");
 
 		commandProcessor.process("pass 3");
 
@@ -140,9 +159,9 @@ public class PassTimeCommandProcessorTest {
 	void pass_time_increases_the_age_of_the_savings_acc_properly() {
 		commandProcessor.process("create savings 12345678 3.0");
 		commandProcessor.process("deposit 12345678 100");
-		commandProcessor.process("pass 3");
+		commandProcessor.process("pass 6");
 
-		assertEquals(3, bank.getAccounts().get("12345678").getAge());
+		assertEquals(6, bank.getAccounts().get("12345678").getAge());
 	}
 
 	@Test
@@ -179,9 +198,9 @@ public class PassTimeCommandProcessorTest {
 	@Test
 	void pass_time_increases_the_age_of_the_cd_acc_properly() {
 		commandProcessor.process("create cd 12345678 3.0 1200");
-		commandProcessor.process("pass 3");
+		commandProcessor.process("pass 6");
 
-		assertEquals(3, bank.getAccounts().get("12345678").getAge());
+		assertEquals(6, bank.getAccounts().get("12345678").getAge());
 	}
 
 	@Test
@@ -226,6 +245,16 @@ public class PassTimeCommandProcessorTest {
 	}
 
 	@Test
+	void pass_time_for_checking_acc_with_a_balance_of_5000_and_apr_of_0_point_6_after_one_month_has_passed_has_correct_new_increased_balance() {
+		commandProcessor.process("create checking 12345678 0.6");
+		commandProcessor.process("deposit 12345678 5000");
+		commandProcessor.process("pass 1");
+
+		double actualBalance = bank.getAccounts().get("12345678").getBalance();
+		assertEquals(5002.509, actualBalance, 0.01);
+	}
+
+	@Test
 	void pass_time_of_three_months_for_checking_acc_with_balance_of_1000_and_apr_of_3_percent_calculates_correct_new_increased_balance() {
 		commandProcessor.process("create checking 12345678 3.0");
 		commandProcessor.process("deposit 12345678 1000");
@@ -263,16 +292,6 @@ public class PassTimeCommandProcessorTest {
 
 		double actualBalance = bank.getAccounts().get("12345678").getBalance();
 		assertEquals(1007.52, actualBalance, 0.01);
-	}
-
-	@Test
-	void pass_time_for_checking_acc_with_a_balance_of_5000_and_apr_of_0_point_6_after_one_month_has_passed_has_correct_new_increased_balance() {
-		commandProcessor.process("create checking 12345678 0.6");
-		commandProcessor.process("deposit 12345678 5000");
-		commandProcessor.process("pass 1");
-
-		double actualBalance = bank.getAccounts().get("12345678").getBalance();
-		assertEquals(5002.509, actualBalance, 0.01);
 	}
 
 	@Test
@@ -343,7 +362,7 @@ public class PassTimeCommandProcessorTest {
 
 		commandProcessor.process("pass 1");
 
-		Boolean exists = bank.accountExistsById("12345678");
+		boolean exists = bank.accountExistsById("12345678");
 
 		assertFalse(exists);
 	}
@@ -355,7 +374,7 @@ public class PassTimeCommandProcessorTest {
 
 		commandProcessor.process("pass 3");
 
-		Boolean exists = bank.accountExistsById("12345678");
+		boolean exists = bank.accountExistsById("12345678");
 
 		assertFalse(exists);
 	}

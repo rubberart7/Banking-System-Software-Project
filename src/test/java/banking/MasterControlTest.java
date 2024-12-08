@@ -219,7 +219,7 @@ public class MasterControlTest {
 	}
 
 	@Test
-	void typo_in_create_command_and_deposit_command_makes_sure_to_add_those_invalid_commands_to_the_end_of_the_output_list() {
+	void typo_in_create_command_and_invalid_deposit_command_makes_sure_to_add_those_invalid_commands_to_the_end_of_the_output_list() {
 		input.add("Create savings 12345678 0");
 		input.add("Deposit 12345678 700");
 
@@ -442,7 +442,7 @@ public class MasterControlTest {
 	}
 
 	@Test
-	void invalid_withdraw_doesent_updates_the_acc_info_for_savings_acc_accordingly() {
+	void invalid_withdraw_doesent_update_the_acc_info_for_savings_acc_accordingly() {
 		input.add("create savings 12345678 2.0");
 		input.add("deposit 12345678 2500");
 		input.add("withdraw 12345678 1001");

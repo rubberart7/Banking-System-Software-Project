@@ -154,7 +154,7 @@ public class CommandValidatorTest {
 	}
 
 	@Test
-	void setCommandValidator_can_confirm_that_a_transfer_command_is_valid() {
+	void commandValidator_can_confirm_that_a_transfer_command_is_valid() {
 		bank.addRegularAccount("12345678", 3.0, "checking");
 		bank.addRegularAccount("87654321", 3.0, "savings");
 		bank.getAccounts().get("12345678").deposit(800);
@@ -166,7 +166,7 @@ public class CommandValidatorTest {
 	}
 
 	@Test
-	void setCommandValidator_can_confirm_that_a_transfer_command_is_valid_twice() {
+	void commandValidator_can_confirm_that_a_transfer_command_is_valid_twice() {
 		bank.addRegularAccount("12345678", 3.0, "checking");
 		bank.addRegularAccount("87654321", 3.0, "savings");
 		bank.getAccounts().get("12345678").deposit(800);
@@ -180,7 +180,7 @@ public class CommandValidatorTest {
 	}
 
 	@Test
-	void setCommandValidator_can_confirm_that_a_transfer_command_is_invalid() {
+	void commandValidator_can_confirm_that_a_transfer_command_is_invalid() {
 		bank.addRegularAccount("12345678", 3.0, "checking");
 		bank.addRegularAccount("87654321", 3.0, "savings");
 		bank.getAccounts().get("12345678").deposit(800);
@@ -192,7 +192,7 @@ public class CommandValidatorTest {
 	}
 
 	@Test
-	void setCommandValidator_can_confirm_that_a_transfer_command_is_invalid_twice() {
+	void commandValidator_can_confirm_that_a_transfer_command_is_invalid_twice() {
 		bank.addRegularAccount("12345678", 3.0, "checking");
 		bank.addRegularAccount("87654321", 3.0, "savings");
 		bank.getAccounts().get("12345678").deposit(800);

@@ -111,6 +111,14 @@ public class TransferCommandValidatorTest {
 		assertFalse(actual);
 	}
 
+	@Test
+	void trying_to_transfer_money_when_the_to_acc_is_the_only_acc_that_is_in_the_bank_is_invalid() {
+		bank.addRegularAccount("87654321", 3.0, "savings");
+		bank.getAccounts().get("87654321").deposit(100);
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 100");
+		assertFalse(actual);
+	}
+
 //	missing values/arguments
 
 	@Test
@@ -312,6 +320,18 @@ public class TransferCommandValidatorTest {
 
 	}
 
+	@Test
+	void transfer_is_invalid_because_you_are_trying_to_transfer_from_and_to_a_cd_acc() {
+		bank.addCDAccount("12345678", 0.0, 1000);
+		bank.addCDAccount("87654321", 0.0, 1000);
+		bank.passTime(12);
+
+		boolean actual = commandValidator.validate("transfer 87654321 12345678 1200");
+
+		assertFalse(actual);
+
+	}
+
 // can transfer between checking and savings acc
 	@Test
 	void transfer_is_valid_because_you_are_transferring_from_checking_acc_to_another_checking_acc() {
@@ -338,13 +358,37 @@ public class TransferCommandValidatorTest {
 	}
 
 	@Test
-	void transfer_transfer_is_valid_because_you_are_transferring_from_checking_acc_to_a_savings_acc() {
+	void transfer_is_valid_because_you_are_transferring_between_0_and_400_from_checking_acc_to_another_checking_acc() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		bank.addRegularAccount("87654321", 3.0, "checking");
+
+		bank.getAccounts().get("12345678").deposit(1000);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 200");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	void transfer_is_valid_because_you_are_transferring_from_checking_acc_to_a_savings_acc() {
 		bank.addRegularAccount("12345678", 3.0, "checking");
 		bank.addRegularAccount("87654321", 3.0, "savings");
 
 		bank.getAccounts().get("12345678").deposit(100);
 
 		boolean actual = commandValidator.validate("transfer 12345678 87654321 80");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	void transfer_is_valid_because_you_are_transferring_between_0_and_400_from_checking_acc_to_a_savings_acc() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		bank.addRegularAccount("87654321", 3.0, "savings");
+
+		bank.getAccounts().get("12345678").deposit(1000);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 200");
 
 		assertTrue(actual);
 	}
@@ -374,6 +418,18 @@ public class TransferCommandValidatorTest {
 	}
 
 	@Test
+	void transfer_is_valid_because_you_are_transferring_between_0_and_1000_from_savings_acc_to_another_savings_acc() {
+		bank.addRegularAccount("12345678", 3.0, "savings");
+		bank.addRegularAccount("87654321", 3.0, "savings");
+
+		bank.getAccounts().get("12345678").deposit(1000);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 401");
+
+		assertTrue(actual);
+	}
+
+	@Test
 	void transfer_is_valid_because_you_are_transferring_the_entire_balance_from_a_savings_acc_to_another_savings_acc() {
 		bank.addRegularAccount("12345678", 3.0, "savings");
 		bank.addRegularAccount("87654321", 3.0, "savings");
@@ -398,6 +454,18 @@ public class TransferCommandValidatorTest {
 	}
 
 	@Test
+	void transfer_is_valid_because_you_are_transferring_between_0_and_1000_from_savings_acc_to_a_checking_acc() {
+		bank.addRegularAccount("12345678", 3.0, "savings");
+		bank.addRegularAccount("87654321", 3.0, "checking");
+
+		bank.getAccounts().get("12345678").deposit(1000);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 401");
+
+		assertTrue(actual);
+	}
+
+	@Test
 	void transfer_is_valid_because_you_are_transferring_the_entire_balance_from_a_savings_acc_to_a_checking_acc() {
 		bank.addRegularAccount("12345678", 3.0, "savings");
 		bank.addRegularAccount("87654321", 3.0, "checking");
@@ -410,7 +478,7 @@ public class TransferCommandValidatorTest {
 	}
 
 	@Test
-	void transfer_from_checking_is_valid_even_if_you_try_to_transfer_more_than_what_is_in_the_account() {
+	void transfer_from_checking_is_valid_even_if_you_try_to_transfer_more_than_what_is_in_the_account_but_it_is_within_allowed_range_for_withdrawal() {
 		bank.addRegularAccount("12345678", 3.0, "checking");
 		bank.addRegularAccount("87654321", 3.0, "savings");
 
@@ -419,6 +487,18 @@ public class TransferCommandValidatorTest {
 		boolean actual = commandValidator.validate("transfer 12345678 87654321 400");
 
 		assertTrue(actual);
+	}
+
+	@Test
+	void transfer_from_checking_is_invalid_if_you_try_to_transfer_more_than_what_is_in_the_account_but_it_is_within_allowed_range_for_withdrawal() {
+		bank.addRegularAccount("12345678", 3.0, "checking");
+		bank.addRegularAccount("87654321", 3.0, "savings");
+
+		bank.getAccounts().get("12345678").deposit(100);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 401");
+
+		assertFalse(actual);
 	}
 
 	@Test
@@ -431,6 +511,18 @@ public class TransferCommandValidatorTest {
 		boolean actual = commandValidator.validate("transfer 12345678 87654321 400");
 
 		assertTrue(actual);
+	}
+
+	@Test
+	void transfer_from_savings_is_invalid_if_you_try_to_transfer_more_than_what_is_in_the_account_but_it_is_within_allowed_range_for_withdrawal() {
+		bank.addRegularAccount("12345678", 3.0, "savings");
+		bank.addRegularAccount("87654321", 3.0, "checking");
+
+		bank.getAccounts().get("12345678").deposit(100);
+
+		boolean actual = commandValidator.validate("transfer 12345678 87654321 1001");
+
+		assertFalse(actual);
 	}
 
 	@Test
