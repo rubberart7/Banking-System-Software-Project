@@ -92,6 +92,13 @@ public class PassTimeCommandValidatorTest {
 	}
 
 	@Test
+	void pass_time_negative_is_invalid() {
+		boolean actual = commandValidator.validate("pass -1");
+
+		assertFalse(actual);
+	}
+
+	@Test
 	void pass_time_typo_in_pass_part_is_invalid() {
 		boolean actual = commandValidator.validate("paass 5");
 		assertFalse(actual);

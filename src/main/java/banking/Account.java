@@ -29,10 +29,12 @@ public abstract class Account {
 	protected void withdraw(double amount) {
 		if (amount >= 0 && balance >= amount) {
 			balance -= amount;
+
 		} else {
 			balance = 0;
 		}
 
+		monthlyWithdrawals += 1;
 	}
 
 	protected double getBalance() {
@@ -40,7 +42,7 @@ public abstract class Account {
 	}
 
 	protected void passTimeAndCalcAPR(int month) {
-		time += month;
+		resetMonthlyWithdrawals(month);
 		double aprDec = ((aprValue / 100) / 12);
 		double monthlyInterest = aprDec * balance;
 		balance += monthlyInterest;
@@ -52,12 +54,9 @@ public abstract class Account {
 		return time;
 	}
 
-	protected void addMonthlyWithdrawal(int withdrawalNum) {
-		monthlyWithdrawals += withdrawalNum;
-	}
-
-	protected void addTime(int months) {
-		time += months;
+	protected void resetMonthlyWithdrawals(int month) {
+		time += month;
 		monthlyWithdrawals = 0;
 	}
+
 }

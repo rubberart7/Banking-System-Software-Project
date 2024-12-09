@@ -20,7 +20,7 @@ public class DepositCommandProcessorTest {
 		bank.addRegularAccount("12345678", 2.0, "checking");
 		bank.addRegularAccount("87654321", 2.0, "checking");
 
-		commandProcessor.processCommand("deposit 12345678 100");
+		commandProcessor.process("deposit 12345678 100");
 
 		assertEquals(100, bank.getAccounts().get("12345678").getBalance());
 	}
@@ -28,7 +28,7 @@ public class DepositCommandProcessorTest {
 	@Test
 	void can_deposit_zero_into_checking_acc() {
 		bank.addRegularAccount("12345678", 2.0, "checking");
-		commandProcessor.processCommand("deposit 12345678 0");
+		commandProcessor.process("deposit 12345678 0");
 
 		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
 	}
@@ -38,8 +38,8 @@ public class DepositCommandProcessorTest {
 		bank.addRegularAccount("12345678", 2.0, "checking");
 		bank.addRegularAccount("87654321", 2.0, "checking");
 
-		commandProcessor.processCommand("deposit 12345678 100");
-		commandProcessor.processCommand("deposit 12345678 200");
+		commandProcessor.process("deposit 12345678 100");
+		commandProcessor.process("deposit 12345678 200");
 
 		assertEquals(300, bank.getAccounts().get("12345678").getBalance());
 	}
@@ -49,7 +49,7 @@ public class DepositCommandProcessorTest {
 		bank.addRegularAccount("12345678", 2.0, "savings");
 		bank.addRegularAccount("87654321", 2.0, "savings");
 
-		commandProcessor.processCommand("deposit 12345678 100");
+		commandProcessor.process("deposit 12345678 100");
 
 		assertEquals(100, bank.getAccounts().get("12345678").getBalance());
 	}
@@ -57,7 +57,7 @@ public class DepositCommandProcessorTest {
 	@Test
 	void can_deposit_zero_into_savings_acc() {
 		bank.addRegularAccount("12345678", 2.0, "savings");
-		commandProcessor.processCommand("deposit 12345678 0");
+		commandProcessor.process("deposit 12345678 0");
 
 		assertEquals(0, bank.getAccounts().get("12345678").getBalance());
 	}
@@ -67,8 +67,8 @@ public class DepositCommandProcessorTest {
 		bank.addRegularAccount("12345678", 2.0, "savings");
 		bank.addRegularAccount("87654321", 2.0, "savings");
 
-		commandProcessor.processCommand("deposit 12345678 100");
-		commandProcessor.processCommand("deposit 12345678 200");
+		commandProcessor.process("deposit 12345678 100");
+		commandProcessor.process("deposit 12345678 200");
 
 		assertEquals(300, bank.getAccounts().get("12345678").getBalance());
 	}
@@ -79,7 +79,7 @@ public class DepositCommandProcessorTest {
 		bank.addRegularAccount("87654321", 2.0, "checking");
 		bank.addRegularAccount("22222222", 2.0, "savings");
 
-		commandProcessor.processCommand("deposit 22222222 300");
+		commandProcessor.process("deposit 22222222 300");
 
 		assertEquals(300, bank.getAccounts().get("22222222").getBalance());
 	}

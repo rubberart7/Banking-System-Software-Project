@@ -17,94 +17,113 @@ public class CreateCommandValidatorTest {
 
 	}
 
+	@Test
+	void can_create_checking_acc_with_the_same_id_if_the_previous_acc_is_deleted() {
+		bank.addRegularAccount("12345678", 3.0, "savings");
+		bank.passTime(1);
+
+		boolean actual = commandValidator.validate("create checking 12345678 3.0");
+
+		assertTrue(actual);
+	}
+
+	@Test
+	void cannot_create_checking_acc_with_the_same_id_if_there_is_still_an_acc_with_that_id() {
+		bank.addRegularAccount("12345678", 3.0, "savings");
+
+		boolean actual = commandValidator.validate("create checking 12345678 3.0");
+
+		assertFalse(actual);
+	}
+
 	// test with missing arguments
 	@Test
-	void create_checking_acc_with_missing_create_command() {
+	void create_checking_acc_with_missing_create_command_is_invalid() {
 		boolean actual = commandValidator.validate("checking 12345678 3.2");
 		assertFalse(actual);
 	}
 
 	@Test
-	void create_checking_with_missing_apr_value() {
+	void create_checking_with_missing_apr_value_is_invalid() {
 		boolean actual = commandValidator.validate("create checking 12345678");
 		assertFalse(actual);
 
 	}
 
 	@Test
-	void create_savings_with_missing_apr_value() {
+	void create_savings_with_missing_apr_value_is_invalid() {
 		boolean actual = commandValidator.validate("create savings 12345678");
 		assertFalse(actual);
 
 	}
 
 	@Test
-	void create_cd_with_missing_apr_value() {
+	void create_cd_with_missing_apr_value_is_invalid() {
 		boolean actual = commandValidator.validate("create cd 12345678 1000");
 		assertFalse(actual);
 
 	}
 
 	@Test
-	void create_checking_with_missing_id_value() {
+	void create_checking_with_missing_id_value_is_invalid() {
 		boolean actual = commandValidator.validate("create checking 3.2");
 		assertFalse(actual);
 
 	}
 
 	@Test
-	void create_savings_with_missing_id_value() {
+	void create_savings_with_missing_id_value_is_invalid() {
 		boolean actual = commandValidator.validate("create savings 3.2");
 		assertFalse(actual);
 
 	}
 
 	@Test
-	void create_cd_with_missing_id_value() {
+	void create_cd_with_missing_id_value_is_invalid() {
 		boolean actual = commandValidator.validate("create cd 3.2 1000");
 		assertFalse(actual);
 
 	}
 
 	@Test
-	void create_command_arguments_out_of_order() {
+	void create_command_arguments_out_of_order_is_invalid() {
 		boolean actual = commandValidator.validate("12345678 checking 3.2");
 		assertFalse(actual);
 
 	}
 
 	@Test
-	void create_checking_acc_with_typo_create_command() {
+	void create_checking_acc_with_typo_create_command_is_invalid() {
 		boolean actual = commandValidator.validate("crate checking 12345678 3.2");
 		assertFalse(actual);
 	}
 
 	@Test
-	void create_savings_acc_with_missing_create_command() {
+	void create_savings_acc_with_missing_create_command_is_invalid() {
 		boolean actual = commandValidator.validate("savings 12345678 3.2");
 		assertFalse(actual);
 	}
 
 	@Test
-	void create_cd_acc_with_missing_create_command() {
+	void create_cd_acc_with_missing_create_command_is_invalid() {
 		boolean actual = commandValidator.validate("cd 3.2 1000");
 		assertFalse(actual);
 	}
 
 	@Test
-	void create_cd_acc_with_missing_minimum_value() {
+	void create_cd_acc_with_missing_minimum_value_is_invalid() {
 		boolean actual = commandValidator.validate("cd 12345678 3.2");
 		assertFalse(actual);
 	}
 
 	@Test
-	void create_checking_or_savings_and_missing_account_type() {
+	void create_checking_or_savings_and_missing_account_type_is_invalid() {
 		boolean actual = commandValidator.validate("create 12345678 3.2");
 		assertFalse(actual);
 	}
 
 	@Test
-	void create_cd_account_with_missing_account_type() {
+	void create_cd_account_with_missing_account_type_is_invalid() {
 		boolean actual = commandValidator.validate("create 12345678 3.2 1000");
 		assertFalse(actual);
 	}

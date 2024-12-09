@@ -19,4 +19,10 @@ public class CheckingAccountTest {
 
 		assertEquals(account.DEFAULT_STARTING_BALANCE, actual);
 	}
+
+	@Test
+	void checking_acc_returns_correct_acc_type() {
+		String accountType = account.getAccountType();
+		assertEquals("checking", accountType);
+	}
 }

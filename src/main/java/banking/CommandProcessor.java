@@ -10,7 +10,7 @@ public class CommandProcessor {
 		this.bank = bank;
 	}
 
-	protected void processCommand(String command) {
+	protected void process(String command) {
 		ArrayList<String> commandParts = new ArrayList<>(Arrays.asList(command.split(" ")));
 		String commandType = commandParts.get(0);
 		if (commandType.equalsIgnoreCase("create")) {
@@ -25,6 +25,10 @@ public class CommandProcessor {
 		} else if (commandType.equalsIgnoreCase("pass")) {
 			PassTimeCommandProcessor passTimeCommandProcessor = new PassTimeCommandProcessor(bank);
 			passTimeCommandProcessor.process(commandParts);
+		} else if (commandType.equalsIgnoreCase("transfer")) {
+			TransferCommandProcessor transferProcessor = new TransferCommandProcessor(bank);
+			transferProcessor.process(commandParts);
 		}
 	}
+
 }
